@@ -1,6 +1,6 @@
 package com.microcave.masjidtimetable.util.classes;
 
-public class CustomListView {
+public class CustomListView  implements Comparable<CustomListView>{
 	
 	private String m_name;
 	private String loc1;
@@ -8,12 +8,12 @@ public class CustomListView {
 	private int icon;
 	private int icon1;
 	private int icon2;
-	int counter;
+	public int counter=0;
 		
 	public CustomListView(){}
 
 	public CustomListView(String title, String l, String l1,int icon,int icon1,int icon2){
-	//	this.counter=i;
+	counter++;
 		this.m_name = title;
 		this.loc1=l;
 		this.loc2=l1;
@@ -69,5 +69,15 @@ public class CustomListView {
 	public void setIcon2(int icon2){
 		this.icon2 = icon2;
 	}
-	
+
+	@Override
+	public int compareTo(CustomListView another) {
+	//	int _count=(int)another.counter;
+ int num=this.getMasjidName().compareToIgnoreCase((String )another.getMasjidName());
+		if(num!=0)
+		{
+			return num;
+		}
+		return 0;
+	}
 }

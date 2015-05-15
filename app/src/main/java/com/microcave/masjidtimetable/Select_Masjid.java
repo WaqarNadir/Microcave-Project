@@ -194,6 +194,7 @@ public class Select_Masjid extends ActionBarActivity {
                 Collections.sort(Masjid);
                 Collections.sort(Local_Area);
                 Collections.sort(Larger_area);
+                Collections.sort(listViewItems);
 
                 // dismiss loader
                 loader.dismiss();
