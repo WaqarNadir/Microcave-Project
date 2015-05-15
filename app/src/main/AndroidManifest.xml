@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.microcave.masjidtimetable" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.AppCompat.NoActionBar" >
+        <activity
+            android:name=".DashBoard"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Select_Masjid"
+            android:label="@string/title_activity_select__masjid"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".Nearest_Masjid"
+            android:label="@string/title_activity_nearest__masjid"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".Instruction"
+            android:label="@string/title_activity_instruction"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".Tasbeeh"
+            android:label="@string/title_activity_tasbeeh"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".Alarm"
+            android:label="@string/title_activity_alarm"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".Asma_ul_Husna"
+            android:label="@string/title_activity_asma_ul__husna"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".Themes"
+            android:label="@string/title_activity_themes"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".Sponsor"
+            android:label="@string/title_activity_sponsor"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".Learning_Center"
+            android:label="@string/title_activity_learning__center"
+            android:screenOrientation="portrait">
+        </activity>
+    </application>
+
+</manifest>

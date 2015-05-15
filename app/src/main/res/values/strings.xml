@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Masjid Timetable</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_select__masjid">Select_Masjid</string>
+    <string name="title_activity_nearest__masjid">Nearest_Masjid</string>
+    <string name="title_activity_instruction">Instruction</string>
+    <string name="title_activity_tasbeeh">Tasbeeh</string>
+    <string name="title_activity_alarm">Alarm</string>
+    <string name="title_activity_asma_ul__husna">Asma_ul_Husna</string>
+    <string name="title_activity_themes">Themes</string>
+    <string name="title_activity_sponsor">Sponsor</string>
+    <string name="Wakeup">Wake up</string>
+    <string name="Asma">Asma ul husna</string>
+    <string name="title_activity_learning__center">Learning_Center</string>
+    <string name="title_activity_main">MainActivity</string>
+</resources>

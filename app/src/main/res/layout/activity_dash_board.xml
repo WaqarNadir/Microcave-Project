@@ -1,0 +1,155 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
+    android:layout_height="fill_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".DashBoard"
+    android:background="@drawable/background">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Dashboard_background"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/header" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Dashboard_image"
+        android:layout_alignBottom="@+id/Dashboard_background"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/dashboard1"
+        android:layout_alignParentTop="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Container"
+        android:src="@drawable/cond"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Select_masjid"
+        android:src="@drawable/masjid_btn"
+        android:layout_alignTop="@+id/Nearest_masjid"
+        android:layout_toLeftOf="@+id/Nearest_masjid"
+        android:layout_toStartOf="@+id/Nearest_masjid"
+        android:onClick="SelectMasjid"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Nearest_masjid"
+        android:src="@drawable/nearist_masjid_btn"
+        android:onClick="NearestMasjid"
+        android:layout_marginTop="10dp"
+        android:layout_alignTop="@+id/Container"
+        android:layout_alignLeft="@+id/Learning_Center"
+        android:layout_alignStart="@+id/Learning_Center" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Tasbeeh"
+        android:onClick="Tasbeeh"
+        android:src="@drawable/counter_btn"
+        android:layout_alignTop="@+id/Nearest_masjid"
+        android:layout_alignRight="@+id/Sponsor"
+        android:layout_alignEnd="@+id/Sponsor" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Wakeup"
+        android:onClick="Wakeup"
+        android:layout_below="@+id/Select_masjid"
+        android:src="@drawable/reminder_btn"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/Select_masjid"
+        android:layout_alignStart="@+id/Select_masjid"
+        android:layout_marginTop="5dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Learning_Center"
+            android:onClick="Learning"
+        android:src="@drawable/learning_center_btn"
+        android:layout_alignTop="@+id/Wakeup"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Asma_ul_husna"
+        android:src="@drawable/names"
+            android:layout_below="@+id/Tasbeeh"
+        android:layout_above="@+id/Sponsor"
+        android:onClick="Asmaulhusna"
+        android:layout_toRightOf="@+id/Nearest_masjid"
+        android:layout_toEndOf="@+id/Nearest_masjid"
+
+        android:layout_alignParentEnd="false"
+        android:layout_marginTop="5dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Instruction"
+        android:src="@drawable/instructions_btn"
+        android:onClick="Instruction"
+        android:layout_alignTop="@+id/Sponsor"
+        android:layout_alignRight="@+id/Wakeup"
+        android:layout_alignEnd="@+id/Wakeup" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Theme"
+        android:src="@drawable/themes_btn"
+        android:onClick="Theme"
+        android:layout_alignTop="@+id/Sponsor"
+        android:layout_alignRight="@+id/Learning_Center"
+        android:layout_alignEnd="@+id/Learning_Center" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Sponsor"
+        android:onClick="sponsor"
+        android:src="@drawable/sponsor_btn"
+        android:layout_below="@+id/Learning_Center"
+        android:layout_toRightOf="@+id/Theme"
+        android:layout_toEndOf="@+id/Theme"
+        android:layout_marginTop="4dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView10"
+        android:layout_below="@+id/Dashboard_background"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/timetable_btn" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView11"
+        android:layout_below="@+id/Container"
+        android:layout_marginTop="55dp"
+        android:src="@drawable/settings_btn"
+        android:layout_alignLeft="@+id/imageView10"
+        android:layout_alignStart="@+id/imageView10"
+        android:layout_alignRight="@+id/imageView10"
+        android:layout_alignEnd="@+id/imageView10" />
+
+
+</RelativeLayout>
