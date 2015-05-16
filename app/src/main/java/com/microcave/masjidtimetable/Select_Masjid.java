@@ -3,6 +3,7 @@ package com.microcave.masjidtimetable;
 import com.microcave.masjidtimetable.util.classes.ConnectionDetector;
 import com.microcave.masjidtimetable.util.classes.CustomListView;
 import com.microcave.masjidtimetable.util.classes.CustomListViewAdapter;
+import com.microcave.masjidtimetable.util.classes.GetDataFromWebservice;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -180,6 +181,15 @@ public class Select_Masjid extends ActionBarActivity {
                     Local_Area.add(i,obj.getString("masjid_local_area"));
                     Larger_area.add(i,obj.getString("masjid_larger_area"));
 
+                    if(Larger_area.get(i).equals("")){
+                        listViewItems.add(new CustomListView(Masjid.get(i),
+                                Local_Area.get(i),
+                                obj.getString("masjid_country"),
+                                R.drawable.locationicon_blue,
+                                R.drawable.locationicon_green,
+                                R.drawable.arrow_right));
+                    }
+                    else{
                     listViewItems.add(new CustomListView(Masjid.get(i),
                             Local_Area.get(i),
                             Larger_area.get(i)
@@ -188,6 +198,7 @@ public class Select_Masjid extends ActionBarActivity {
                             R.drawable.locationicon_blue,
                             R.drawable.locationicon_green,
                             R.drawable.arrow_right));
+                    }
 
                 }
 
@@ -218,6 +229,7 @@ public class Select_Masjid extends ActionBarActivity {
 
     public int SearchMasjid(String s)
     {
+        Toast.makeText(this,s,Toast.LENGTH_SHORT).show();
                 for(int i=0; i<Masjid.size();i++)
                 {
                     temp=Masjid.get(i).toString();              // to check ignorecase sensitivity
@@ -226,7 +238,10 @@ public class Select_Masjid extends ActionBarActivity {
                         return  i;          // send starting index of Alphabet from list
                     }
                 }
-                    return 0;
+        char val= s.charAt(0);
+        val++;
+        String  _value= String.valueOf(val) ;
+        return SearchMasjid(_value);
     }
 //-----------------------------------------------------------------------------
 
@@ -239,9 +254,8 @@ public class Select_Masjid extends ActionBarActivity {
     {
         if(cd.isConnectingToInternet()) {
 
-            al.clear();
-            adapter.clear();
-            adapter.notifyDataSetChanged();
+            listViewItems.clear();
+            ListViewAdapter.notifyDataSetChanged();
             // start loader
             showLoader();
             // -------------------------get data from web service --------------------
@@ -268,6 +282,7 @@ public class Select_Masjid extends ActionBarActivity {
     }
 
     public void showLoader(){
+
         // starting loader
         loader.setMessage("Fetching data, Please wait...");
         loader.setIndeterminate(true);

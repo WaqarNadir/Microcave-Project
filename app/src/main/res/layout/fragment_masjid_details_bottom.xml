@@ -1,0 +1,162 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    tools:context="com.microcave.masjidtimetable.Tasbeeh">
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:id="@+id/box2"
+        android:layout_below="@+id/box1"
+        android:layout_alignLeft="@+id/box1"
+        android:layout_alignStart="@+id/box1"
+        android:layout_alignRight="@+id/dashboard_md"
+        android:layout_alignEnd="@+id/dashboard_md"
+        android:background="@drawable/box02_bg"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_marginTop="5dp"
+        android:textColor="#fffafa"
+        android:text="Please select one of the four buttons below"
+        android:id="@+id/box2_description"
+        android:layout_alignTop="@+id/box2"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="and set this masjid as one of your favorites"
+        android:id="@+id/box2_description1"
+        android:textColor="#fffafa"
+        android:layout_marginTop="2dp"
+        android:layout_below="@+id/box2_description"
+        android:layout_alignLeft="@+id/box2_description"
+        android:layout_alignStart="@+id/box2_description"
+        android:layout_alignRight="@+id/box2_description"
+        android:layout_alignEnd="@+id/box2_description" />
+    <ImageView
+        android:id="@+id/primary"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="2dp"
+        android:src="@drawable/select_primary"
+        android:layout_below="@+id/box2_description1"
+        android:layout_alignRight="@+id/tertiary"
+        android:layout_alignEnd="@+id/tertiary" />
+    <ImageView
+        android:id="@+id/secondary"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/select_secondary"
+        android:layout_above="@+id/tertiary"
+        android:layout_alignRight="@+id/white_dot"
+        android:layout_alignEnd="@+id/white_dot" />
+    <ImageView
+        android:id="@+id/tertiary"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/select_tertiary"
+        android:layout_below="@+id/primary"
+        android:layout_toLeftOf="@+id/quaternary"
+        android:layout_toStartOf="@+id/quaternary" />
+    <ImageView
+        android:id="@+id/quaternary"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:src="@drawable/select_quaternary"
+        android:layout_alignLeft="@+id/secondary"
+        android:layout_alignStart="@+id/secondary"
+        android:layout_alignRight="@+id/secondary"
+        android:layout_alignEnd="@+id/secondary"
+        android:layout_alignBottom="@+id/tertiary"
+        android:layout_alignTop="@+id/tertiary" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Aug 2014 TO NOV 2014"
+        android:id="@+id/months"
+        android:textColor="#fffafa"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/box2"
+        android:layout_alignLeft="@+id/tertiary"
+        android:layout_alignStart="@+id/tertiary" />
+    <ImageView
+        android:id="@+id/white_dot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/dot_white"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_toEndOf="@+id/box2_description1"
+        android:layout_alignTop="@+id/months"
+        android:layout_toRightOf="@+id/box2_description1" />
+    <ImageView
+        android:id="@+id/red_dot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/dot_red"
+        android:layout_toEndOf="@+id/white_dot"
+        android:layout_alignTop="@+id/white_dot"
+        android:layout_toRightOf="@+id/white_dot" />
+    <ImageView
+        android:id="@+id/red_dot_on_white_dot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/dot_red"
+        android:layout_toEndOf="@+id/box2_description1"
+        android:layout_alignTop="@+id/white_dot"
+        android:layout_toRightOf="@+id/box2_description1" />
+    <ImageView
+        android:id="@+id/white_dot_on_red_dot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/dot_white"
+        android:layout_alignTop="@+id/red_dot"
+        android:layout_toRightOf="@+id/white_dot"
+        android:layout_alignRight="@+id/red_dot"
+        android:layout_alignEnd="@+id/red_dot"
+        android:layout_alignBottom="@+id/red_dot" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/box3"
+        android:background="@drawable/box03_bg"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/months"
+        android:layout_alignRight="@+id/donation_normal"
+        android:layout_alignEnd="@+id/donation_normal"
+        android:layout_alignLeft="@+id/box2"
+        android:layout_alignStart="@+id/box2" />
+    <ImageView
+        android:id="@+id/left_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/arrow_left"
+        android:layout_alignTop="@+id/box3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="56dp" />
+    <ImageView
+        android:id="@+id/right_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/arrowright"
+        android:layout_alignTop="@+id/left_arrow"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

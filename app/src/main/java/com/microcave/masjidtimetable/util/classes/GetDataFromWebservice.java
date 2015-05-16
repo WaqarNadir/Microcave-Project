@@ -1,21 +1,18 @@
-package com.microcave.masjidtimetable;
+package com.microcave.masjidtimetable.util.classes;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 
-
-//import com.google.android.gms.maps.model.LatLng;
-
-
-
-import android.util.Log;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class GetDataFromWebservice {
 
@@ -26,6 +23,11 @@ public class GetDataFromWebservice {
 
             // create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
+            //setting timeout for request 5 seconds
+            HttpParams params = httpclient.getParams();
+            HttpConnectionParams.setConnectionTimeout(params, 5000);
+            //HttpConnectionParams.setSoTimeout(params, 3000);
+
 
             // make GET request to the given URL
             HttpResponse httpResponse = httpclient.execute(new HttpGet(url));

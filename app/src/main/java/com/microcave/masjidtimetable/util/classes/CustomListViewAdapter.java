@@ -17,21 +17,21 @@ import com.microcave.masjidtimetable.R;
 public class CustomListViewAdapter extends BaseAdapter {
 	
 	private Context context;
-	private ArrayList<CustomListView> navDrawerItems;
+	private ArrayList<CustomListView> CustomListViewItems;
 	
-	public CustomListViewAdapter(Context context, ArrayList<CustomListView> navDrawerItems){
+	public CustomListViewAdapter(Context context, ArrayList<CustomListView> CustomListViewItems){
 		this.context = context;
-		this.navDrawerItems = navDrawerItems;
+		this.CustomListViewItems = CustomListViewItems;
 	}
 
 	@Override
 	public int getCount() {
-		return navDrawerItems.size();
+		return CustomListViewItems.size();
 	}
 
 	@Override
 	public Object getItem(int position) {		
-		return navDrawerItems.get(position);
+		return CustomListViewItems.get(position);
 	}
 
 	@Override
@@ -47,20 +47,20 @@ public class CustomListViewAdapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.custom_list_view, null);
         }
          
-        TextView txtTitle = (TextView) convertView.findViewById(R.id.textView1);
-        TextView txtTitle1 = (TextView) convertView.findViewById(R.id.textView2);
-        TextView txtTitle2 = (TextView) convertView.findViewById(R.id.textView3);
-        ImageView img=(ImageView) convertView.findViewById(R.id.add1);
-        ImageView img1=(ImageView) convertView.findViewById(R.id.add2);
-        ImageView img2=(ImageView) convertView.findViewById(R.id.arrow);
-         
-            
-        txtTitle.setText(navDrawerItems.get(position).getMasjidName());
-        txtTitle1.setText(navDrawerItems.get(position).getloc1());
-        txtTitle2.setText(navDrawerItems.get(position).getloc2());
-        img.setImageResource(navDrawerItems.get(position).getIcon());
-        img1.setImageResource(navDrawerItems.get(position).getIcon1());
-        img2.setImageResource(navDrawerItems.get(position).getIcon2());
+        TextView MasjidName = (TextView) convertView.findViewById(R.id.masjid_name);
+        TextView LocalArea = (TextView) convertView.findViewById(R.id.local_area);
+        TextView LargerAreaCountry = (TextView) convertView.findViewById(R.id.larger_area_country);
+        ImageView LocalAreaIcon=(ImageView) convertView.findViewById(R.id.local_area_icon);
+        ImageView LargerAreaIcon=(ImageView) convertView.findViewById(R.id.larger_area_icon);
+        ImageView ArrowIcon=(ImageView) convertView.findViewById(R.id.arrow);
+
+
+		MasjidName.setText(CustomListViewItems.get(position).getMasjidName());
+		LocalArea.setText(CustomListViewItems.get(position).getloc1());
+		LargerAreaCountry.setText(CustomListViewItems.get(position).getloc2());
+		LocalAreaIcon.setImageResource(CustomListViewItems.get(position).getIcon());
+		LargerAreaIcon.setImageResource(CustomListViewItems.get(position).getIcon1());
+		ArrowIcon.setImageResource(CustomListViewItems.get(position).getIcon2());
                 
         return convertView;
 	}

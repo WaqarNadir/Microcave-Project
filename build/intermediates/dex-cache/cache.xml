@@ -2,32 +2,32 @@
 <items version="2" >
 
     <item
-        jar="D:\MicroCave\MicroCave\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.0.0\classes.jar"
+        jar="D:\Microcave-Project\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.0.0\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="d84409890828e07d344a3b9b1da545dba9897b51">
-        <dex dex="D:\MicroCave\MicroCave\app\build\intermediates\pre-dexed\debug\classes-72da0d64776ea384d2476c8a5bf36e282e249a63.jar" />
+        <dex dex="D:\Microcave-Project\app\build\intermediates\pre-dexed\debug\classes-428186eaff55eed3eef2024faf17903b5745ca78.jar" />
     </item>
     <item
-        jar="D:\MicroCave\MicroCave\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\libs\internal_impl-22.0.0.jar"
+        jar="D:\Microcave-Project\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\libs\internal_impl-22.0.0.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
-        <dex dex="D:\MicroCave\MicroCave\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-67f501072b1ab041485409adb7328a1175403132.jar" />
-    </item>
-    <item
-        jar="D:\MicroCave\MicroCave\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
-        <dex dex="D:\MicroCave\MicroCave\app\build\intermediates\pre-dexed\debug\classes-f2bf090c9edeb009a39eb13c61bbbbf040c82ce9.jar" />
+        <dex dex="D:\Microcave-Project\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-5b12b60566da6f79acbbebe21a768a9ca55c7cb7.jar" />
     </item>
     <item
         jar="H:\testssss\sdk\extras\android\m2repository\com\android\support\support-annotations\22.0.0\support-annotations-22.0.0.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
-        <dex dex="D:\MicroCave\MicroCave\app\build\intermediates\pre-dexed\debug\support-annotations-22.0.0-7149222949b07bf5127def218d0af37fa78ae914.jar" />
+        <dex dex="D:\Microcave-Project\app\build\intermediates\pre-dexed\debug\support-annotations-22.0.0-7149222949b07bf5127def218d0af37fa78ae914.jar" />
+    </item>
+    <item
+        jar="D:\Microcave-Project\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="D:\Microcave-Project\app\build\intermediates\pre-dexed\debug\classes-e58db6ceb6a5dd1545c1ff6a858e0401d5cfeca7.jar" />
     </item>
 
 </items>
