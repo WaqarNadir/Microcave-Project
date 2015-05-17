@@ -8,7 +8,9 @@ import com.microcave.masjidtimetable.util.classes.GetDataFromWebservice;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -28,6 +30,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
 
 
 public class Select_Masjid extends ActionBarActivity {
@@ -52,7 +56,7 @@ public class Select_Masjid extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select__masjid);
 
-        // initialization
+        //------------------- initialization ----------------------------------------------------
         al=new ArrayList<String>();
         Masjid=new ArrayList<String>();
         Local_Area=new ArrayList<String>();
@@ -64,6 +68,18 @@ public class Select_Masjid extends ActionBarActivity {
         ShowValue=new ArrayList<CustomListView>();
         MasjidList=(ListView) findViewById(R.id.masjid_list);
         searchbox= (EditText)findViewById(R.id.search);
+//-------------------------------------------------------------------------------------------------
+//        MasjidList.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//
+//                    }
+//                }
+//        );
+
+
 
         if(cd.isConnectingToInternet()) {
             // start loader
@@ -160,6 +176,9 @@ public class Select_Masjid extends ActionBarActivity {
 
 
     }
+
+
+
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls)

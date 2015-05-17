@@ -1,0 +1,287 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/background"
+    tools:context="com.example.testproject.MainActivity" >
+
+    <ImageView
+        android:id="@+id/masjidlist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/select_masjid"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:id="@+id/reload"
+        android:layout_width="70dp"
+        android:layout_height="20dp"
+        android:onClick="reload"
+        android:layout_alignBottom="@+id/masjidlist"
+        android:layout_alignRight="@+id/masjidlist"
+        android:layout_alignTop="@+id/masjidlist"
+        android:paddingRight="5dp"
+        android:src="@drawable/reload"
+        />
+    <ImageView
+        android:id="@+id/dash"
+        android:layout_width="70dp"
+        android:layout_height="20dp"
+        android:layout_alignBottom="@+id/masjidlist"
+        android:layout_alignLeft="@+id/masjidlist"
+        android:layout_alignTop="@+id/masjidlist"
+        android:paddingLeft="5dp"
+        android:onClick="dashboard"
+        android:src="@drawable/dashboard" />
+
+    <EditText
+        android:id="@+id/search"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_below="@+id/masjidlist"
+        android:layout_toLeftOf="@+id/reload"
+        android:hint="Search"
+        android:textColorHint="#000000"
+        android:paddingLeft="10dp"
+        android:background="@drawable/search_bg"
+        android:inputType="text"/>
+
+    <ImageView
+        android:id="@+id/timetable"
+        android:onClick="timetable"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:paddingLeft="5dp"
+        android:layout_below="@+id/s_search"
+        android:src="@drawable/timetable_btn" />
+
+    <ImageView
+        android:id="@+id/all"
+        android:onClick="All"
+        android:layout_width="65dp"
+        android:layout_height="35dp"
+        android:layout_alignLeft="@+id/reload"
+        android:layout_alignTop="@+id/search"
+        android:paddingLeft="5dp"
+        android:src="@drawable/button_all" />
+
+    <ImageView
+        android:id="@+id/s_search"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignBottom="@+id/all"
+        android:layout_alignRight="@+id/search"
+        android:layout_below="@+id/masjidlist"
+        android:paddingRight="10dp"
+        android:src="@drawable/search_icon" />
+
+    <!--<ImageView
+        android:id="@+id/alphabets"
+        android:layout_width="wrap_content"
+        android:layout_height="350dp"
+        android:layout_marginTop="53dp"
+        android:paddingLeft="15dp"
+        android:src="@drawable/text_abc"
+        android:layout_below="@+id/search"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />-->
+
+    <!-- <ImageView
+         android:id="@+id/lvbc"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="10dp"
+         android:layout_alignBottom="@+id/alphabets"
+         android:layout_alignRight="@+id/all"
+         android:layout_alignTop="@+id/search"
+         android:paddingRight="10dp"
+         android:src="@drawable/box_bg" />
+     -->
+
+    <ListView
+        android:id="@+id/masjid_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timetable"
+        android:layout_toLeftOf="@+id/alphabets"
+        android:paddingRight="10dp"
+        >
+
+    </ListView>
+    <LinearLayout
+        android:id="@+id/alphabets"
+        android:orientation="vertical"
+        android:layout_below="@id/timetable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="0dp"
+        android:background="@android:color/transparent" >
+
+        <TextView android:id="@+id/A" android:text="A" android:tag="A"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:onClick="scroll"
+            android:layout_width="match_parent"
+            android:clickable="true"
+            android:layout_height="15dp" />
+        <TextView android:id="@+id/B" android:text="B" android:tag="B"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:onClick="scroll"
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:layout_height="15dp" />
+        <TextView android:id="@+id/C" android:text="C" android:tag="C"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:clickable="true"
+            android:onClick="scroll"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
+        <TextView android:id="@+id/D" android:text="D" android:tag="D"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:onClick="scroll"
+            android:clickable="true"
+            android:layout_height="wrap_content"
+            android:layout_width="15dp" />
+        <TextView android:id="@+id/E" android:text="E" android:tag="E"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:clickable="true"
+            android:onClick="scroll"
+            android:layout_height="15dp"/>
+        <TextView android:id="@+id/F" android:text="F" android:tag="F"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:clickable="true"
+            android:onClick="scroll"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            />
+        <TextView android:id="@+id/G" android:text="G" android:tag="G"
+            android:onClick="scroll"
+            android:clickable="true"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
+        <TextView android:id="@+id/H" android:text="H" android:tag="H"
+            android:onClick="scroll"
+            android:clickable="true"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
+        <TextView android:id="@+id/I" android:text="I" android:tag="I"
+            android:onClick="scroll"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            />
+        <TextView android:id="@+id/J" android:text="J" android:tag="J"
+            android:onClick="scroll"
+            android:clickable="true"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
+        <TextView android:id="@+id/K" android:text="K" android:tag="K"
+            android:onClick="scroll"
+            android:clickable="true"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
+        <TextView android:id="@+id/L" android:text="L" android:tag="L"
+            android:onClick="scroll"
+            android:clickable="true"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
+        <TextView android:id="@+id/M" android:text="M" android:tag="M"
+            android:onClick="scroll"
+            android:clickable="true"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
+        <TextView android:id="@+id/N" android:text="N" android:tag="N"
+            android:onClick="scroll"
+            android:clickable="true"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
+        <TextView android:id="@+id/O" android:text="O" android:tag="O"
+            android:onClick="scroll"
+            android:clickable="true"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="15dp" />
+        <TextView android:id="@+id/P" android:text="P" android:tag="P"
+            android:onClick="scroll"
+            android:clickable="true"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
+        <TextView android:id="@+id/Q" android:text="Q" android:tag="Q"
+            android:onClick="scroll"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
+        <TextView android:id="@+id/R" android:text="R" android:tag="R"
+            android:onClick="scroll"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
+        <TextView android:id="@+id/S" android:text="S" android:tag="S"
+            android:onClick="scroll"
+            android:clickable="true"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
+        <TextView android:id="@+id/T" android:text="T" android:tag="T"
+            android:onClick="scroll"
+            android:clickable="true"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
+        <TextView android:id="@+id/U" android:text="U" android:tag="U"
+            android:onClick="scroll"
+            android:clickable="true"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_height="15dp"
+            android:layout_width="wrap_content" />
+        <TextView android:id="@+id/V" android:text="V" android:tag="V"
+            android:onClick="scroll"
+            android:clickable="true"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
+        <TextView android:id="@+id/W" android:text="W" android:tag="W"
+            android:onClick="scroll"
+            android:clickable="true"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
+        <TextView android:id="@+id/X" android:text="X" android:tag="X"
+            android:onClick="scroll"
+            android:clickable="true"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
+        <TextView android:id="@+id/Y" android:text="Y" android:tag="Y"
+            android:clickable="true"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_height="15dp"
+            android:layout_width="wrap_content" />
+        <TextView android:id="@+id/Z" android:text="Z" android:tag="Z"
+            android:onClick="scroll"
+            android:clickable="true"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_height="15dp"
+            android:layout_width="wrap_content" />
+    </LinearLayout>
+
+</RelativeLayout>

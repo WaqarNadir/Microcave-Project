@@ -36,8 +36,10 @@ public  void  SelectMasjid(View v)
     }
     public  void  Wakeup(View v)
     {
-        Intent i= new Intent(this,Alarm.class);
+        Intent i= new Intent(this,frag_SelectMasjid.class);
+        //Intent i= new Intent(this,.class);
         startActivity(i);
+
 
     }
 
