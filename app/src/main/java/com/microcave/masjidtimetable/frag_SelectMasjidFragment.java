@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 
@@ -27,6 +28,7 @@ import com.microcave.masjidtimetable.util.classes.CustomListViewAdapter;
 import com.microcave.masjidtimetable.util.classes.GetDataFromWebservice;
 import com.microcave.masjidtimetable.util.classes.I_MasjiddetailPage;
 import com.microcave.masjidtimetable.util.classes.I_getObject;
+import com.microcave.masjidtimetable.util.classes.MasjidDetail;
 import com.microcave.masjidtimetable.util.classes.Select_masjid_Communicator;
 
 import org.json.JSONArray;
@@ -42,9 +44,13 @@ import java.util.Collections;
  */
 public class frag_SelectMasjidFragment extends Fragment  implements Select_masjid_Communicator{
 
+    JSONObject obj;
+    JSONArray arr;
     ListView MasjidList;
     ArrayList<String> Masjid;
     ArrayList<String> Local_Area;
+    ArrayList<MasjidDetail> MasjidDetailArray;
+
     ArrayList<String> Larger_area;
     String temp;
     ProgressDialog loader;
@@ -59,6 +65,8 @@ public class frag_SelectMasjidFragment extends Fragment  implements Select_masji
     I_MasjiddetailPage DetailPage;
     static I_getObject get;
 
+
+
     public frag_SelectMasjidFragment() {
 
     }
@@ -68,9 +76,9 @@ public class frag_SelectMasjidFragment extends Fragment  implements Select_masji
                              Bundle savedInstanceState) {
 
 
-
         data=(Communicator_fragment)getActivity();
         ( (frag_SelectMasjid)getActivity() ).FC=this;
+
 
         return inflater.inflate(R.layout.fragment_frag__select_masjid, container, false);
 
@@ -84,9 +92,10 @@ public class frag_SelectMasjidFragment extends Fragment  implements Select_masji
 if(get!=null)
 {
     Log.e("OBJECT VALUE" , "Value is found");
-    DetailPage= (checkfrag)get.getobject();
+    DetailPage= (MasjidDetail_fragment)get.getobject();
 }
         //------------------- initialization ----------------------------------------------------
+        MasjidDetailArray = new ArrayList<MasjidDetail>();
         Masjid=new ArrayList<String>();
         Local_Area=new ArrayList<String>();
         Larger_area=new ArrayList<String>();
@@ -96,15 +105,41 @@ if(get!=null)
         ShowValue=new ArrayList<CustomListView>();
 
 
+
         MasjidList=(ListView) getView(). findViewById(R.id.masjid_list);
         searchbox= (EditText)getView().findViewById(R.id.search);
 //-------------------------------------------------------------------------------------------------
         MasjidList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+
+             //   view.setBackgroundColor(getResources().getColor(R.color.material_blue_grey_800));
                         String name=    listViewItems.get(position).getMasjidName();
-                          DetailPage.SetMasjid(name);
-                        ((frag_SelectMasjid) getActivity()).Tab.setCurrentItem(1);
+                String loc= listViewItems.get(position).getloc1();
+                            for(int i=0; i<MasjidDetailArray.size() ; i++)
+                            {
+                                if(MasjidDetailArray.get(i).getMasjid_name().contains(name)
+                                        &&
+                                      MasjidDetailArray.get(i).getMasjid_local_area().contains(loc)  )
+                                {
+                                    DetailPage.SetDetail(name,
+                                            MasjidDetailArray.get(i).getMasjid_local_area(),
+                                            MasjidDetailArray.get(i).getMasjid_larger_area(),
+                                            MasjidDetailArray.get(i).getMasjid_post_code(),
+                                            MasjidDetailArray.get(i).getMasjid_country(),
+                                            MasjidDetailArray.get(i).getMasjid_telephone()
+                                                            );
+
+                                    data.getListview(ListViewAdapter,position);
+                                }
+
+
+                            }
+                ((frag_SelectMasjid) getActivity()).Tab.setCurrentItem(1);
             }
         });
 
@@ -147,6 +182,7 @@ if(get!=null)
                             if(listViewItems.get(val).getMasjidName().contains(Masjid.get(i)) )
                             {
                                 ShowValue.add(listViewItems.get(val));
+
                             }
                         }
 //------------------------------------------------------------------------------------------------
@@ -243,8 +279,8 @@ if(get!=null)
         {
 
             try {
-                JSONArray arr = new JSONArray(result);
-                JSONObject obj;
+                arr = new JSONArray(result);
+
                 for(int i=0;i<arr.length();i++){
                     obj=arr.getJSONObject(i);
 
@@ -252,6 +288,7 @@ if(get!=null)
                     Local_Area.add(i,obj.getString("masjid_local_area"));
                     Larger_area.add(i,obj.getString("masjid_larger_area"));
 
+                    fillMasjiddetail();
                     if(Larger_area.get(i).equals("")){
                         listViewItems.add(new CustomListView(Masjid.get(i),
                                 Local_Area.get(i),
@@ -333,9 +370,35 @@ if(get!=null)
 
     @Override
     public void check() {
-        DetailPage= (checkfrag)get.getobject();
+        DetailPage= (MasjidDetail_fragment)get.getobject();
 
     }
 
+public void fillMasjiddetail()
+    {
+        try {
+            MasjidDetail MD = new MasjidDetail();
+            MD.setMasjid_name(obj.getString("masjid_name"));
+            MD.setFull_name(obj.getString("full_name"));
+            MD.setMasjid_add_1(obj.getString("masjid_add_1"));
+            MD.setMasjid_local_area(obj.getString("masjid_local_area"));
+            MD.setMasjid_larger_area(obj.getString("masjid_larger_area"));
+            MD.setMasjid_post_code(obj.getString("masjid_post_code"));
+            MD.setMasjid_telephone(obj.getString("masjid_telephone"));
+            MD.setMasjid_country(obj.getString("masjid_country"));
+            MD.setMasjid_created(obj.getString("masjid_created"));
+            MD.setMasjid_modified(obj.getString("masjid_modified"));
+            MD.setStatus(obj.getString("status"));
+            MD.setCode(obj.getString("code"));
+        MasjidDetailArray.add(MD);
 
+
+
+        }catch(Exception e)
+        {
+
+        }
+
+
+    }
 }

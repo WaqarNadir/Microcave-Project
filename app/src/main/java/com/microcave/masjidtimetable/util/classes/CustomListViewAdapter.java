@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +19,31 @@ import com.microcave.masjidtimetable.R;
 public class CustomListViewAdapter extends BaseAdapter {
 	
 	private Context context;
+	private int Primary= -1;
+	private int Secondary = -1;
+	private int Ternary = -1;
+	private int Quatary = -1;
+	int color=Color.WHITE;
+	public   boolean already_clicked=false;
+	public   boolean S_already_clicked=false;
+	public   boolean T_already_clicked=false;
+	public   boolean Q_already_clicked=false;
+	int type;
+
+
+	public void setSelectedPosition(int pos){
+		Primary = pos;
+		notifyDataSetChanged();
+	}
+
 	private ArrayList<CustomListView> CustomListViewItems;
 	
 	public CustomListViewAdapter(Context context, ArrayList<CustomListView> CustomListViewItems){
 		this.context = context;
 		this.CustomListViewItems = CustomListViewItems;
 	}
+
+
 
 	@Override
 	public int getCount() {
@@ -45,8 +66,49 @@ public class CustomListViewAdapter extends BaseAdapter {
             LayoutInflater mInflater = (LayoutInflater)
                     context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.custom_list_view, null);
+
         }
-         
+		if (Primary == position ) {
+			Log.e("In primary","");
+			if(!already_clicked) {
+				convertView.setBackgroundColor(Color.GREEN);
+			}if(already_clicked)
+			{
+				convertView.setBackgroundColor(Color.WHITE);
+			}
+		}
+		if (Secondary == position ) {
+			Log.e("In Secondary","");
+			if(!S_already_clicked) {
+				convertView.setBackgroundColor(Color.GRAY);
+			}if(S_already_clicked)
+			{
+				convertView.setBackgroundColor(Color.WHITE);
+			}
+		}
+		if (Ternary == position ) {
+			Log.e("In ternary","");
+			if(!T_already_clicked) {
+				convertView.setBackgroundColor(Color.YELLOW);
+			}if(T_already_clicked)
+			{
+				convertView.setBackgroundColor(Color.WHITE);
+			}
+		}
+		if (Quatary == position ) {
+			Log.e("In Quantry","");
+			if(!Q_already_clicked) {
+				convertView.setBackgroundColor(Color.BLUE);
+			}if(Q_already_clicked)
+			{
+				convertView.setBackgroundColor(Color.WHITE);
+			}
+		}
+		if(Quatary != position  && Ternary != position && Secondary != position && Primary!= position)
+		{
+			convertView.setBackgroundColor(Color.WHITE);
+		}
+
         TextView MasjidName = (TextView) convertView.findViewById(R.id.masjid_name);
         TextView LocalArea = (TextView) convertView.findViewById(R.id.local_area);
         TextView LargerAreaCountry = (TextView) convertView.findViewById(R.id.larger_area_country);
@@ -65,4 +127,19 @@ public class CustomListViewAdapter extends BaseAdapter {
         return convertView;
 	}
 
+	public void setSecondary(int secondary) {
+		Secondary = secondary;
+		notifyDataSetChanged();
+	}
+
+	public void setTernary(int ternary) {
+		Ternary = ternary;
+		notifyDataSetChanged();
+	}
+
+
+	public void setQuatary(int quatary) {
+		Quatary = quatary;
+		notifyDataSetChanged();
+	}
 }

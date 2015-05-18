@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,7 @@ import android.widget.TextView;
 import com.microcave.masjidtimetable.util.classes.Communicator_fragment;
 import com.microcave.masjidtimetable.util.classes.I_MasjiddetailPage;
 
-public class checkfrag extends Fragment  implements I_MasjiddetailPage {
+public class checkfrag extends Fragment   {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -56,12 +57,23 @@ public class checkfrag extends Fragment  implements I_MasjiddetailPage {
     }
 
 
-    @Override
-    public void SetMasjid(String s) {
 
+    public void SetDetail(String Masjid, String LocalArea, String LargerArea ,String Country) {
 
+        Log.e("value of masjid",Masjid +"\n"+ LocalArea+"\n"+ LargerArea +"\n"+ Country);
         TextView tv= (TextView) getView().findViewById(R.id.changevalue);
-        tv.setText(s);
+        TextView tv2= (TextView) getView().findViewById(R.id.textView2);
+        TextView tv3= (TextView) getView().findViewById(R.id.textView3);
+        TextView tv4= (TextView) getView().findViewById(R.id.textView4);
+        TextView tv5= (TextView) getView().findViewById(R.id.textView5);
+        tv.setText(Masjid);
+        tv3.setText(LocalArea);
+        tv4.setText(LargerArea);
+        tv5.setText(Country);
+
+
+
+
 
     }
 }

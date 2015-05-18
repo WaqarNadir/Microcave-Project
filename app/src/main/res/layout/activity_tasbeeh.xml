@@ -49,7 +49,8 @@
         android:layout_alignLeft="@+id/masjidlist_md"
         android:layout_alignStart="@+id/masjidlist_md"
         android:layout_alignRight="@+id/dashboard_md"
-        android:layout_alignEnd="@+id/dashboard_md" />
+        android:layout_alignEnd="@+id/dashboard_md"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/call_icon"
@@ -153,7 +154,8 @@
         android:layout_marginTop="10dp"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/box1"
-        android:layout_alignStart="@+id/box1">
+        android:layout_alignStart="@+id/box1"
+        android:visibility="gone">
 
     </FrameLayout>
 

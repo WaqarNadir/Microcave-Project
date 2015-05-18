@@ -3,6 +3,8 @@ package com.microcave.masjidtimetable.util.classes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.microcave.masjidtimetable.*;
 import com.microcave.masjidtimetable.frag_SelectMasjidFragment;
@@ -14,7 +16,7 @@ public class myclass extends FragmentStatePagerAdapter implements I_getObject {
     public myclass(FragmentManager fm) {
         super(fm);
     }
-    checkfrag c= new checkfrag();
+    MasjidDetail_fragment c= new MasjidDetail_fragment();
     frag_SelectMasjidFragment f= new frag_SelectMasjidFragment();
 
     @Override
@@ -22,16 +24,15 @@ public class myclass extends FragmentStatePagerAdapter implements I_getObject {
         switch (position)
         {
             case 0:
-                //Fragement for Android Tab
+
                 return  f;
             case 1:
-                //Fragment for Ios Tab
+
                 return  c;
 
         }
         return null;
     }
-
     @Override
     public int getCount() {
         return 2;
