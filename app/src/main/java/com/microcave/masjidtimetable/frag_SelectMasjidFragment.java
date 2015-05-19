@@ -131,7 +131,8 @@ if(get!=null)
                                             MasjidDetailArray.get(i).getMasjid_larger_area(),
                                             MasjidDetailArray.get(i).getMasjid_post_code(),
                                             MasjidDetailArray.get(i).getMasjid_country(),
-                                            MasjidDetailArray.get(i).getMasjid_telephone()
+                                            MasjidDetailArray.get(i).getMasjid_telephone(),
+                                            MasjidDetailArray.get(i).getMasjid_ID()
                                                             );
 
                                     data.getListview(ListViewAdapter,position);
@@ -140,6 +141,7 @@ if(get!=null)
 
                             }
                 ((frag_SelectMasjid) getActivity()).Tab.setCurrentItem(1);
+
             }
         });
 
@@ -378,6 +380,7 @@ public void fillMasjiddetail()
     {
         try {
             MasjidDetail MD = new MasjidDetail();
+            MD.setMasjid_ID(obj.getString("masjid_id"));
             MD.setMasjid_name(obj.getString("masjid_name"));
             MD.setFull_name(obj.getString("full_name"));
             MD.setMasjid_add_1(obj.getString("masjid_add_1"));
@@ -391,9 +394,6 @@ public void fillMasjiddetail()
             MD.setStatus(obj.getString("status"));
             MD.setCode(obj.getString("code"));
         MasjidDetailArray.add(MD);
-
-
-
         }catch(Exception e)
         {
 

@@ -75,7 +75,6 @@
         android:text="primary"
         android:onClick="Primary"
         android:id="@+id/button5"
-        android:layout_marginTop="124dp"
         android:layout_below="@+id/textView8"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -86,7 +85,7 @@
         android:text="ternary"
         android:onClick="Ternary"
         android:id="@+id/button6"
-        android:layout_alignTop="@+id/button5"
+        android:layout_alignTop="@+id/textView9"
         android:layout_centerHorizontal="true" />
 
     <Button
@@ -95,9 +94,9 @@
         android:text="quatary"
         android:onClick="Quatary"
         android:id="@+id/button7"
-        android:layout_below="@+id/button6"
-        android:layout_toLeftOf="@+id/button4"
-        android:layout_toStartOf="@+id/button4" />
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/button5"
+        android:layout_toEndOf="@+id/button5" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -106,7 +105,128 @@
         android:text="Secondary"
         android:onClick="Secondary"
         android:id="@+id/button8"
-        android:layout_above="@+id/button6"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignTop="@+id/button7"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView"
+        android:layout_below="@+id/button7"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        >
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/horizontalScrollView"
+            android:layout_column="2" >
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/NamazTable"
+            >
+
+            <TableRow  >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date"
+                    android:id="@+id/RowHeader1"
+                    android:layout_gravity="left|top"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="B/J"
+                    android:id="@+id/RowHeader2"
+                    android:paddingLeft="7dp"
+                    android:layout_gravity="left|top"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+                
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="7dp"
+                    android:text="Fajar"
+                    android:id="@+id/RowHeader3"
+                    android:layout_gravity="left|top"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_column="3" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sunrise"
+                    android:paddingLeft="7dp"
+                    android:id="@+id/RowHeader4"
+                    android:layout_gravity="left|top"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_column="4" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Zohar"
+                    android:paddingLeft="7dp"
+                    android:id="@+id/RowHeader5"
+                    android:layout_gravity="left|top"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_column="5" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Asar"
+                    android:paddingLeft="7dp"
+                    android:id="@+id/RowHeader6"
+                    android:layout_gravity="left|top"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_column="6" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Maghrib"
+                    android:paddingLeft="7dp"
+                    android:id="@+id/RowHeader7"
+                    android:layout_gravity="left|top"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_column="7" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Esha"
+                    android:paddingLeft="7dp"
+                    android:id="@+id/RowHeader8"
+                    android:layout_gravity="left|top"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_column="8" />
+
+            </TableRow>
+
+        </TableLayout>
+    </HorizontalScrollView>
+        </ScrollView>
 
 </RelativeLayout>

@@ -6,6 +6,7 @@ package com.microcave.masjidtimetable.util.classes;
 public class MasjidDetail {
 
     private String masjid_name ;
+    private String masjid_ID;
     private String  masjid_add_1;
     private String masjid_local_area;
     private String  masjid_larger_area;
@@ -112,5 +113,13 @@ public class MasjidDetail {
 
     public void setFull_name(String full_name) {
         this.full_name = full_name;
+    }
+
+    public String getMasjid_ID() {
+        return masjid_ID;
+    }
+
+    public void setMasjid_ID(String masjid_ID) {
+        this.masjid_ID = masjid_ID;
     }
 }

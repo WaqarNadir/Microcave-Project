@@ -23,6 +23,12 @@ public class CustomListViewAdapter extends BaseAdapter {
 	private int Secondary = -1;
 	private int Ternary = -1;
 	private int Quatary = -1;
+
+	private int Primarypos= -333	;
+	private int Secondarypos = -333;
+	private int Ternarypos = -333;
+	private int Quatarypos = -33;
+
 	int color=Color.WHITE;
 	public   boolean already_clicked=false;
 	public   boolean S_already_clicked=false;
@@ -68,40 +74,49 @@ public class CustomListViewAdapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.custom_list_view, null);
 
         }
+
 		if (Primary == position ) {
 			Log.e("In primary","");
 			if(!already_clicked) {
 				convertView.setBackgroundColor(Color.GREEN);
+				Primarypos=position;
 			}if(already_clicked)
 			{
 				convertView.setBackgroundColor(Color.WHITE);
+				Primarypos=-333;
 			}
 		}
 		if (Secondary == position ) {
 			Log.e("In Secondary","");
 			if(!S_already_clicked) {
 				convertView.setBackgroundColor(Color.GRAY);
+				Secondarypos=position;
 			}if(S_already_clicked)
 			{
 				convertView.setBackgroundColor(Color.WHITE);
+				Secondarypos=-333;
 			}
 		}
 		if (Ternary == position ) {
 			Log.e("In ternary","");
 			if(!T_already_clicked) {
 				convertView.setBackgroundColor(Color.YELLOW);
+				Ternarypos=position;
 			}if(T_already_clicked)
 			{
 				convertView.setBackgroundColor(Color.WHITE);
+				Ternarypos=-333;
 			}
 		}
 		if (Quatary == position ) {
-			Log.e("In Quantry","");
+			Log.e("In Quantry", "");
 			if(!Q_already_clicked) {
 				convertView.setBackgroundColor(Color.BLUE);
+				Quatarypos=position;
 			}if(Q_already_clicked)
 			{
 				convertView.setBackgroundColor(Color.WHITE);
+				Quatarypos=-333;
 			}
 		}
 		if(Quatary != position  && Ternary != position && Secondary != position && Primary!= position)
