@@ -93,16 +93,15 @@ public class MasjidDetail_fragment extends Fragment implements I_MasjiddetailPag
     @Override
     public void setcontext(Context c) {
         context=c;
-        Log.e("Context value seting", c.toString());
     }
 
-    public void MakeCall(View v) {
-        Log.e("MAKE call", "meathod found");
-        Intent intent = new Intent(Intent.ACTION_CALL);
-
-        intent.setData(Uri.parse("tel:" + phone_number));
-        getActivity().getApplicationContext().startActivity(intent);
-    }
+//    public void MakeCall(View v) {
+//        Log.e("MAKE call", "meathod found");
+//        Intent intent = new Intent(Intent.ACTION_CALL);
+//
+//        intent.setData(Uri.parse("tel:" + phone_number));
+//        getActivity().getApplicationContext().startActivity(intent);
+//    }
 
 
     public void NamazTime() {
@@ -188,13 +187,8 @@ public class MasjidDetail_fragment extends Fragment implements I_MasjiddetailPag
                     _TimeTable.addView(TR);
 
                     Toast.makeText(getActivity().getApplicationContext(),
-                             "hello ", Toast.LENGTH_SHORT).show();
+                             "hello !!! context is present ", Toast.LENGTH_SHORT).show();
                              ;
-
-
-
-
-
                 }
 
 

@@ -28,6 +28,7 @@ public class myclass extends FragmentStatePagerAdapter implements I_getObject {
                 return  f;
             case 1:
 
+
                 return  c;
 
         }

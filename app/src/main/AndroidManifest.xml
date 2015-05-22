@@ -5,7 +5,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.call_phone" />
-    <uses-feature android:name="android.hardware.telephony" android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
 
     <supports-screens
         android:anyDensity="true"
@@ -78,6 +81,10 @@
         <activity
             android:name=".frag_SelectMasjid"
             android:label="@string/title_activity_frag__select_masjid" >
+        </activity>
+        <activity
+            android:name=".TimeTable"
+            android:label="@string/title_activity_time_table" >
         </activity>
     </application>
 

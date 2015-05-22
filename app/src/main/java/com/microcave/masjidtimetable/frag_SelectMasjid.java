@@ -26,6 +26,7 @@ import com.microcave.masjidtimetable.util.classes.ConnectionDetector;
 import com.microcave.masjidtimetable.util.classes.CustomListView;
 import com.microcave.masjidtimetable.util.classes.CustomListViewAdapter;
 import com.microcave.masjidtimetable.util.classes.GetDataFromWebservice;
+import com.microcave.masjidtimetable.util.classes.MasjidDetail;
 import com.microcave.masjidtimetable.util.classes.Select_masjid_Communicator;
 import com.microcave.masjidtimetable.util.classes.myclass;
 
@@ -49,7 +50,17 @@ public class frag_SelectMasjid extends FragmentActivity implements Communicator_
     static boolean S_value=false;
     static boolean T_value=false;
     static boolean Q_value=false;
+    public  Context context;
+    ArrayList<MasjidDetail> Masjidinfo= new ArrayList<MasjidDetail>();
+    CustomListView _item= new CustomListView();
 
+    // static variable to use in timetable class
+    static  int Primary_Masjid_ID;
+    static  int Secondary_Masjid_ID=0;
+    static  int Ternary_Masjid_ID=0;
+    static  int Quatary_Masjid_ID=0;
+
+    //-----------------------------------------
 
 
     public void Primary(View v)
@@ -60,6 +71,27 @@ public class frag_SelectMasjid extends FragmentActivity implements Communicator_
             _listItem.already_clicked=Primary_value;
             Primary_value=true;
             Tab.setCurrentItem(0);
+
+          Masjidinfo=  frag_SelectMasjidFragment.getMasjidDetailArray();
+            _item=(CustomListView ) _listItem.getItem(position);
+
+            for(int i=0; i<Masjidinfo.size();i++)
+            {
+                        if(Masjidinfo.get(i).getMasjid_name().toLowerCase().contains(_item.getMasjidName().toLowerCase())
+                                &&
+                               Masjidinfo.get(i).getMasjid_local_area().toLowerCase().contains(_item.getloc1().toLowerCase()) )
+                        {
+                                Log.e("primary function.ID", ""+Masjidinfo.get(i).getMasjid_ID());
+
+                                    Primary_Masjid_ID=Integer.parseInt( Masjidinfo.get(i).getMasjid_ID());
+//                            Toast.makeText(this,""+Masjidinfo.get(i).getMasjid_name()+"\n"+
+//                                            Masjidinfo.get(i).getMasjid_local_area()+"\n"+
+//                                            Masjidinfo.get(i).getMasjid_larger_area()+"\n"+
+//                                            Masjidinfo.get(i).getMasjid_country(),Toast.LENGTH_SHORT
+//                            ).show();         //checking working
+                        }
+            }
+
         }
         else
         {
@@ -78,6 +110,25 @@ public class frag_SelectMasjid extends FragmentActivity implements Communicator_
             _listItem.S_already_clicked=S_value;
             S_value=true;
             Tab.setCurrentItem(0);
+            Masjidinfo=  frag_SelectMasjidFragment.getMasjidDetailArray();
+            _item=(CustomListView ) _listItem.getItem(position);
+
+            for(int i=0; i<Masjidinfo.size();i++)
+            {
+                if(Masjidinfo.get(i).getMasjid_name().toLowerCase().contains(_item.getMasjidName().toLowerCase())
+                        &&
+                        Masjidinfo.get(i).getMasjid_local_area().toLowerCase().contains(_item.getloc1().toLowerCase()) )
+                {
+
+                    Secondary_Masjid_ID=Integer.getInteger( Masjidinfo.get(i).getMasjid_ID(),-999);
+                            Toast.makeText(this,"Secondary \n"+Masjidinfo.get(i).getMasjid_name()+"\n"+
+                                            Masjidinfo.get(i).getMasjid_local_area()+"\n"+
+                                            Masjidinfo.get(i).getMasjid_larger_area()+"\n"+
+                                            Masjidinfo.get(i).getMasjid_country(),Toast.LENGTH_SHORT
+                            ).show();         //checking working
+                }
+            }
+
         }
         else
         {
@@ -96,6 +147,25 @@ public class frag_SelectMasjid extends FragmentActivity implements Communicator_
             _listItem.T_already_clicked=T_value;
             T_value=true;
             Tab.setCurrentItem(0);
+            Masjidinfo=  frag_SelectMasjidFragment.getMasjidDetailArray();
+            _item=(CustomListView ) _listItem.getItem(position);
+
+            for(int i=0; i<Masjidinfo.size();i++)
+            {
+                if(Masjidinfo.get(i).getMasjid_name().toLowerCase().contains(_item.getMasjidName().toLowerCase())
+                        &&
+                        Masjidinfo.get(i).getMasjid_local_area().toLowerCase().contains(_item.getloc1().toLowerCase()) )
+                {
+
+                    Ternary_Masjid_ID=Integer.getInteger( Masjidinfo.get(i).getMasjid_ID(),-999);
+                            Toast.makeText(this,"Ternary \n"+Masjidinfo.get(i).getMasjid_name()+"\n"+
+                                            Masjidinfo.get(i).getMasjid_local_area()+"\n"+
+                                            Masjidinfo.get(i).getMasjid_larger_area()+"\n"+
+                                            Masjidinfo.get(i).getMasjid_country(),Toast.LENGTH_SHORT
+                            ).show();         //checking working
+                }
+            }
+
         }
         else
         {
@@ -115,6 +185,25 @@ public class frag_SelectMasjid extends FragmentActivity implements Communicator_
             _listItem.Q_already_clicked=Q_value;
             Q_value=true;
             Tab.setCurrentItem(0);
+            Masjidinfo=  frag_SelectMasjidFragment.getMasjidDetailArray();
+            _item=(CustomListView ) _listItem.getItem(position);
+
+            for(int i=0; i<Masjidinfo.size();i++)
+            {
+                if(Masjidinfo.get(i).getMasjid_name().toLowerCase().contains(_item.getMasjidName().toLowerCase())
+                        &&
+                        Masjidinfo.get(i).getMasjid_local_area().toLowerCase().contains(_item.getloc1().toLowerCase()) )
+                {
+
+                    Quatary_Masjid_ID=Integer.getInteger( Masjidinfo.get(i).getMasjid_ID(),-999);
+                            Toast.makeText(this,"Quatary \n"+Masjidinfo.get(i).getMasjid_name()+"\n"+
+                                            Masjidinfo.get(i).getMasjid_local_area()+"\n"+
+                                            Masjidinfo.get(i).getMasjid_larger_area()+"\n"+
+                                            Masjidinfo.get(i).getMasjid_country(),Toast.LENGTH_SHORT
+                            ).show();         //checking working
+                }
+            }
+
         }
         else
         {
@@ -127,9 +216,8 @@ public class frag_SelectMasjid extends FragmentActivity implements Communicator_
     }
     public void MakeCall(View v)
     {
-        Log.e("MAKE call" , "method found");
+     //   Log.e("MAKE call" , "method found");
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setPackage("com.android.server.telecom");
         intent.setData(Uri.parse("tel:" + "123455679"));
         this.startActivity(intent);
     }
@@ -137,15 +225,12 @@ public class frag_SelectMasjid extends FragmentActivity implements Communicator_
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frag__select_masjid);
-
-
         loader = new ProgressDialog(this);
-
+context=this;
         TabAdapter= new myclass(getSupportFragmentManager());
         Tab=(ViewPager)findViewById(R.id.pager);
         Tab.setAdapter(TabAdapter);
         frag_SelectMasjidFragment.get= TabAdapter;
-
 //        Tab.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 //            public void onPageScrollStateChanged(int state) {
 //                Log.e("State page", ""+move);
@@ -209,6 +294,12 @@ public class frag_SelectMasjid extends FragmentActivity implements Communicator_
     public void getListview(CustomListViewAdapter v,int pos) {
         position=pos;
         _listItem=v;
+
+    }
+
+    @Override
+    public void setcontext() {
+        FC.getcontext(this);
 
     }
 

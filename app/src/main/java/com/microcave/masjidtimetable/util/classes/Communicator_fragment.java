@@ -9,4 +9,5 @@ public interface Communicator_fragment {
     void getData(String s);
     void Loader(boolean show);
     void getListview(CustomListViewAdapter v, int pos);
+    void setcontext();      // set context to next page.
 }

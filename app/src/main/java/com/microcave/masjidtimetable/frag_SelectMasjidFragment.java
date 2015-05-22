@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 
@@ -15,10 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.microcave.masjidtimetable.util.classes.Communicator_fragment;
@@ -45,11 +42,12 @@ import java.util.Collections;
 public class frag_SelectMasjidFragment extends Fragment  implements Select_masjid_Communicator{
 
     JSONObject obj;
+    Context context;
     JSONArray arr;
     ListView MasjidList;
     ArrayList<String> Masjid;
     ArrayList<String> Local_Area;
-    ArrayList<MasjidDetail> MasjidDetailArray;
+    private static ArrayList<MasjidDetail> MasjidDetailArray;
 
     ArrayList<String> Larger_area;
     String temp;
@@ -120,23 +118,25 @@ if(get!=null)
              //   view.setBackgroundColor(getResources().getColor(R.color.material_blue_grey_800));
                         String name=    listViewItems.get(position).getMasjidName();
                 String loc= listViewItems.get(position).getloc1();
-                            for(int i=0; i<MasjidDetailArray.size() ; i++)
+                            for(int i=0; i< getMasjidDetailArray().size() ; i++)
                             {
-                                if(MasjidDetailArray.get(i).getMasjid_name().contains(name)
+                                if(getMasjidDetailArray().get(i).getMasjid_name().contains(name)
                                         &&
-                                      MasjidDetailArray.get(i).getMasjid_local_area().contains(loc)  )
+                                      getMasjidDetailArray().get(i).getMasjid_local_area().contains(loc)  )
                                 {
                                     DetailPage.SetDetail(name,
-                                            MasjidDetailArray.get(i).getMasjid_local_area(),
-                                            MasjidDetailArray.get(i).getMasjid_larger_area(),
-                                            MasjidDetailArray.get(i).getMasjid_post_code(),
-                                            MasjidDetailArray.get(i).getMasjid_country(),
-                                            MasjidDetailArray.get(i).getMasjid_telephone(),
-                                            MasjidDetailArray.get(i).getMasjid_ID()
+                                            getMasjidDetailArray().get(i).getMasjid_local_area(),
+                                            getMasjidDetailArray().get(i).getMasjid_larger_area(),
+                                            getMasjidDetailArray().get(i).getMasjid_post_code(),
+                                            getMasjidDetailArray().get(i).getMasjid_country(),
+                                            getMasjidDetailArray().get(i).getMasjid_telephone(),
+                                            getMasjidDetailArray().get(i).getMasjid_ID()
                                                             );
-                                    DetailPage.setcontext(getActivity().getApplicationContext());
+
+                                    DetailPage.setcontext(context); // passing context to next fragment
 
                                     data.getListview(ListViewAdapter,position);
+                                    //method is used for setting primary secondary etc values
                                 }
 
 
@@ -145,10 +145,6 @@ if(get!=null)
 
             }
         });
-
-
-
-
 
         if(cd.isConnectingToInternet()) {
             // start loader
@@ -270,6 +266,10 @@ if(get!=null)
 
     }
 
+    public static ArrayList<MasjidDetail> getMasjidDetailArray() {
+        return MasjidDetailArray;
+    }
+
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls)
@@ -378,8 +378,8 @@ if(get!=null)
     }
 
     @Override
-    public Context getcontext(Context c) {
-        return null;
+    public void getcontext(Context c) {
+        context=c;
     }
 
     public void fillMasjiddetail()

@@ -1,0 +1,39 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.microcave.masjidtimetable.TimeTable_Primary">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/Primary_Masjid_name"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="199dp"
+        android:layout_marginStart="199dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/Primary_LocalArea"
+        android:layout_below="@+id/Primary_Masjid_name"
+        android:layout_alignLeft="@+id/Primary_Masjid_name"
+        android:layout_alignStart="@+id/Primary_Masjid_name" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/Primary_country"
+        android:layout_below="@+id/Primary_LocalArea"
+        android:layout_alignLeft="@+id/Primary_LocalArea"
+        android:layout_alignStart="@+id/Primary_LocalArea" />
+
+</RelativeLayout>

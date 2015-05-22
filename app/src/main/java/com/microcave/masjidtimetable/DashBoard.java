@@ -74,5 +74,12 @@ public  void  SelectMasjid(View v)
         startActivity(i);
 
     }
+    public  void  Timetable(View v)
+    {
+        Intent i= new Intent(this,TimeTable.class);
+        startActivity(i);
+
+    }
+
 
 }
