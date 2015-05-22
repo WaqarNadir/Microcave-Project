@@ -1,5 +1,6 @@
 package com.microcave.masjidtimetable.util.classes;
 
+import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 
 /**
@@ -12,4 +13,5 @@ public interface Select_masjid_Communicator {
     void dashboard();
     void scroll(String s);
     void check();
+    void getcontext(Context c);
 }

@@ -134,6 +134,7 @@ if(get!=null)
                                             MasjidDetailArray.get(i).getMasjid_telephone(),
                                             MasjidDetailArray.get(i).getMasjid_ID()
                                                             );
+                                    DetailPage.setcontext(getActivity().getApplicationContext());
 
                                     data.getListview(ListViewAdapter,position);
                                 }
@@ -376,7 +377,12 @@ if(get!=null)
 
     }
 
-public void fillMasjiddetail()
+    @Override
+    public Context getcontext(Context c) {
+        return null;
+    }
+
+    public void fillMasjiddetail()
     {
         try {
             MasjidDetail MD = new MasjidDetail();

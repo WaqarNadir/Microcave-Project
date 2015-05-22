@@ -1,6 +1,7 @@
 package com.microcave.masjidtimetable;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -35,6 +36,7 @@ public class MasjidDetail_fragment extends Fragment implements I_MasjiddetailPag
     private String phone_number;
     JSONObject obj;
     JSONArray arr;
+    Context context;
 
     public static MasjidDetail_fragment newInstance(String param1, String param2) {
         MasjidDetail_fragment fragment = new MasjidDetail_fragment();
@@ -42,6 +44,7 @@ public class MasjidDetail_fragment extends Fragment implements I_MasjiddetailPag
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -87,6 +90,12 @@ public class MasjidDetail_fragment extends Fragment implements I_MasjiddetailPag
 
     }
 
+    @Override
+    public void setcontext(Context c) {
+        context=c;
+        Log.e("Context value seting", c.toString());
+    }
+
     public void MakeCall(View v) {
         Log.e("MAKE call", "meathod found");
         Intent intent = new Intent(Intent.ACTION_CALL);
@@ -111,8 +120,10 @@ public class MasjidDetail_fragment extends Fragment implements I_MasjiddetailPag
         protected void onPostExecute(String result)
 
         {
-            Log.e("IN post function", " vlaue is true"+result);
-
+            Log.e("IN post function", " vlaue is true" + result);
+            if(context!=null) {
+                Toast.makeText(context, "Context is available.", Toast.LENGTH_LONG).show();
+            }
             try {
                 arr = new JSONArray(result);
                 Log.e("JSON TRY block =>", " "+arr.get(0));
