@@ -319,6 +319,12 @@ context=this;
     {
         FC.Reload();
     }
+    public void timetable(View v)
+    {
+        Intent i= new Intent(this,TimeTable.class);
+        startActivity(i);
+
+    }
 
 
 }

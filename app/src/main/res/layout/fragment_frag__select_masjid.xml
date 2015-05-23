@@ -58,6 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:paddingLeft="5dp"
+
         android:layout_below="@+id/s_search"
         android:src="@drawable/timetable_btn" />
 

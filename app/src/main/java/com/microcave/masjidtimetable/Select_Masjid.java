@@ -172,7 +172,7 @@ public class Select_Masjid extends ActionBarActivity {
                 }
             };
 //-------------------------------------------------------------------------
-            searchbox.addTextChangedListener(myhandler);
+//            searchbox.addTextChangedListener(myhandler);
 
 
     }
