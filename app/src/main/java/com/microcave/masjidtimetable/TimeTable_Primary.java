@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.TimeUtils;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,13 +23,17 @@ import com.microcave.masjidtimetable.util.classes.GetDataFromWebservice;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.jar.JarEntry;
 
 public class TimeTable_Primary extends Fragment {
 
@@ -50,7 +55,7 @@ public class TimeTable_Primary extends Fragment {
     boolean donation=false;
     Calendar c = Calendar.getInstance();
     SimpleDateFormat sdf = new SimpleDateFormat(" dd:MMMM:yyyy ");
-    SimpleDateFormat df = new SimpleDateFormat(" h:mm a");
+    SimpleDateFormat df = new SimpleDateFormat(" HH:mm ");
     String strDate = sdf.format(c.getTime());
 
 String _subha_sadiq;
@@ -64,6 +69,17 @@ String _Maghrib;
 String _Maghirb_j;
 String _Esha;
 String _Esha_j;
+    String[] _subha_sadiqs;
+    String [] _fajar_jamats;
+    String[]  _sunrises;
+    String [] _Zohars;
+    String [] _Zohar_js;
+    String[]  _Asars;
+    String [] _Asar_js;
+    String [] _Maghribs;
+    String [] _Maghirb_js;
+    String [] _Eshas;
+    String [] _Esha_js;
 
 
 
@@ -252,17 +268,29 @@ if(!PrimaryTimeTable &&!Event &&!notes) {
                 TextView Esha = (TextView) getView().findViewById(R.id.textView25);
                 TextView Esha_j = (TextView) getView().findViewById(R.id.textView26);
 
-                 _subha_sadiq=obj.getString("Subah Sadiq");
-                _fajar_jamat=obj.getString("Fajar");
-                _sunrise=obj.getString("Sunrise");
-                _Zohar=obj.getString("Zohar");
-                _Zohar_j=obj.getString("Zohar-j");
-                _Asar=obj.getString("Asar");
-                _Asar_j=obj.getString("Asar-j");
-                _Maghrib=obj.getString("Sunset");
-                _Maghirb_j=obj.getString("Maghrib");
-                _Esha=obj.getString("Esha");
-                _Esha_j=obj.getString("Esha-j");
+                 _subha_sadiq=obj.getString("Subah Sadiq").replace(":",".");
+                _fajar_jamat=obj.getString("Fajar").replace(":", ".");
+                _sunrise=obj.getString("Sunrise").replace(":", ".");
+                _Zohar=obj.getString("Zohar").replace(":", ".");
+                _Zohar_j=obj.getString("Zohar-j").replace(":", ".");
+                _Asar=obj.getString("Asar").replace(":", ".");
+                _Asar_j=obj.getString("Asar-j").replace(":", ".");
+                _Maghrib=obj.getString("Sunset").replace(":", ".");
+                _Maghirb_j=obj.getString("Maghrib").replace(":", ".");
+                _Esha=obj.getString("Esha").replace(":", ".");
+                _Esha_j=obj.getString("Esha-j").replace(":", ".");
+
+//                _subha_sadiqs=_subha_sadiq.split(":");
+//                _fajar_jamats = _fajar_jamat.split(":");
+//                _sunrises=_sunrise.split(":");
+//                _Zohars=_Zohar.split(":");
+//                _Zohar_js=_Zohar_j.split(":");
+//                _Asars=_Asar.split(":");
+//                _Asar_js=_Asar_j.split(":");
+//                _Maghribs=_Maghrib.split(":");
+//                _Maghirb_js=_Maghirb_j.split(":");
+//                _Eshas=_Esha.split(":");
+//                _Esha_js=_Esha_j.split(":");
 
                 Zohar.setText(obj.getString("Zohar"));
 
@@ -281,7 +309,7 @@ if(!PrimaryTimeTable &&!Event &&!notes) {
                 Asar.setText(obj.getString("Asar"));
                 Asar_j.setText(obj.getString("Asar-j"));
                 Currenttime.setText(strDate);
-
+                calculateTime();
             }
 
         } catch (Exception e) {
@@ -364,5 +392,167 @@ if(!PrimaryTimeTable &&!Event &&!notes) {
         }
     }
 
+public void calculateTime() throws ParseException {
+
+
+    TextView NextPrayer =(TextView)getView().findViewById(R.id.NextPrayer);
+    TextView SecondPrayer =(TextView)getView().findViewById(R.id.SecondPrayer);
+    Date d= new Date();
+    String s= df.format(d);
+    s=s.replace(":",".");
+//    Log.e("Sting time", s + "");
+        Double hour = 4.0;//Double.parseDouble(s);
+        Log.e("double time", hour + "");
+
+    double fajar = Double.parseDouble(_fajar_jamat);
+
+    double subha_sadiq= Double.parseDouble(_subha_sadiq) ;
+
+
+
+    double sunrise=Double.parseDouble(_sunrise);
+
+    double zohar = Double.parseDouble(_Zohar) +12;
+    double zoharj = Double.parseDouble(_Zohar_j)+12;
+
+    double asar= Double.parseDouble(_Asar)+12;
+    double asarj= Double.parseDouble(_Asar_j)+12;
+
+    double maghrib=Double.parseDouble(_Maghrib)+12;
+    double maghribj=Double.parseDouble(_Maghirb_j)+12;
+
+    double esha =Double.parseDouble(_Esha)+12;
+    double eshaj =Double.parseDouble(_Esha_j)+12;
+
+    Toast.makeText(getActivity().getApplicationContext(),"."+hour +" --"+subha_sadiq,
+            Toast.LENGTH_LONG).show();
+Log.e("subha sadiq", "" + subha_sadiq);
+Log.e("Fajar", "" + fajar);
+Log.e("subrise", "" + sunrise);
+Log.e("zohar", "" + zohar);
+Log.e("zohar j", "" + zoharj);
+Log.e("asar", "" + asar);
+Log.e("asar j", "" + asarj);
+Log.e("maghirb ", "" + maghrib);
+Log.e("magr b j", "" + maghribj);
+Log.e("esha ", "" + esha);
+Log.e("esha j",""+eshaj);
+double remaining_Time=0;
+
+    if(hour < subha_sadiq ||hour >eshaj )
+    {
+                remaining_Time=subha_sadiq- hour;
+        Toast.makeText(getActivity().getApplicationContext(),"subha sadiq" , Toast.LENGTH_SHORT).show();
+        Log.e("Next time ", " subha sadiq is next");
+        NextPrayer.setText("Subha sadiq begins in " + remaining_Time);
+
+        remaining_Time=fajar -hour;
+        SecondPrayer.setText("Fajar begins in "+remaining_Time);
+
+    }
+    if(hour < fajar && hour > subha_sadiq)
+{
+    remaining_Time=fajar -hour;
+
+    Toast.makeText(getActivity().getApplicationContext(),"fajr" , Toast.LENGTH_SHORT).show();
+    Log.e("Next time ", " Fajar  is next");
+
+   NextPrayer.setText("Fajar begins in "+remaining_Time );
+
+
+
+    remaining_Time=sunrise-hour;
+SecondPrayer.setText("Sunrise in "+remaining_Time);
+}
+
+    if(hour < sunrise && hour > fajar)
+    {
+        remaining_Time=sunrise-hour;
+        Toast.makeText(getActivity().getApplicationContext(),"foundsunrise" , Toast.LENGTH_SHORT).show();
+        Log.e("Next time ", " sunrise  is next");
+        NextPrayer.setText("Sunrise in " + remaining_Time);
+        remaining_Time=zohar - hour;
+        SecondPrayer.setText("Sunrise in " + remaining_Time);
+    }
+
+    if(hour < zohar && hour > sunrise )
+    {
+        remaining_Time=zohar-hour;
+        Toast.makeText(getActivity().getApplicationContext(),"zohar" , Toast.LENGTH_SHORT).show();
+        Log.e("Next time ", " zohar is next");
+        NextPrayer.setText("Zohar begins in " + remaining_Time);
+
+        remaining_Time=zoharj-hour;
+
+    }
+    if(hour < zoharj && hour > zohar )
+    {
+        remaining_Time=zoharj-hour;
+        Toast.makeText(getActivity().getApplicationContext(),"zohar jamat" , Toast.LENGTH_SHORT).show();
+        Log.e("Next time ", " zohar jamat is next");
+        NextPrayer.setText("Zohar Jamat begins in " + remaining_Time);
+
+        remaining_Time=asar-hour;
+    }
+    if(hour < asar && hour > zoharj)
+    {
+        remaining_Time=asar-hour;
+        Toast.makeText(getActivity().getApplicationContext(),"asar" , Toast.LENGTH_SHORT).show();
+        Log.e("Next time ", " asar is next");
+        NextPrayer.setText("Asar begins in " + remaining_Time);
+
+        remaining_Time=asarj-hour;
+    }
+    if(hour < asarj&& hour > asar)
+    {
+        remaining_Time=asarj-hour;
+        Toast.makeText(getActivity().getApplicationContext(),"asar jamt" , Toast.LENGTH_SHORT).show();
+        Log.e("Next time ", " asar jamat is next");
+        NextPrayer.setText("ASAR Jamat begins in " + remaining_Time);
+
+        remaining_Time=maghrib-hour;
+    }
+    if(hour < maghrib && hour > asarj)
+    {
+        remaining_Time=maghrib-hour;
+    Toast.makeText(getActivity().getApplicationContext(),"maghirb" , Toast.LENGTH_SHORT).show();
+    Log.e("Next time ", " maghirb is next");
+    NextPrayer.setText("Maghrib begins in " + remaining_Time);
+
+        remaining_Time=maghribj-hour;
+    }
+    if(hour < maghribj && hour > maghrib)
+    {
+        remaining_Time=maghribj-hour;
+        Toast.makeText(getActivity().getApplicationContext(),"maghrib jamat" , Toast.LENGTH_SHORT).show();
+        Log.e("Next time ", " maghrib jamat is next");
+        NextPrayer.setText("Maghrib jamat begins in " + remaining_Time);
+
+        remaining_Time=esha-hour;
+    }
+    if(hour < esha && hour > maghribj)
+    {
+        remaining_Time=esha-hour;
+        Toast.makeText(getActivity().getApplicationContext(),"esha" , Toast.LENGTH_SHORT).show();
+        Log.e("Next time ", " esha is next");
+        NextPrayer.setText("Esha  begins in "+remaining_Time);
+
+        remaining_Time=eshaj-hour;
+    }
+    if(hour < eshaj&& hour > esha)
+    {
+        remaining_Time=eshaj-hour;
+        Toast.makeText(getActivity().getApplicationContext(),"esha jamat" , Toast.LENGTH_SHORT).show();
+        Log.e("Next time ", " esha jamat is next");
+        NextPrayer.setText("Esha Jamat begins in "+remaining_Time);
+    }
+
+
+
+
+
+
 
 }
+}
+

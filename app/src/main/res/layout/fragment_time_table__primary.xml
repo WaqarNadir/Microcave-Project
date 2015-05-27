@@ -420,6 +420,24 @@
         android:layout_alignLeft="@+id/textView32"
         android:layout_alignStart="@+id/textView32" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/NextPrayer"
+            android:layout_below="@+id/textView28"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-</RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/SecondPrayer"
+            android:layout_below="@+id/NextPrayer"
+            android:layout_alignRight="@+id/textView31"
+            android:layout_alignEnd="@+id/textView31" />
+
+
+    </RelativeLayout>
 </ScrollView>
