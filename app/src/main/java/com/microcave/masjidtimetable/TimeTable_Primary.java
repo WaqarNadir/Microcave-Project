@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -280,18 +282,6 @@ if(!PrimaryTimeTable &&!Event &&!notes) {
                 _Esha=obj.getString("Esha").replace(":", ".");
                 _Esha_j=obj.getString("Esha-j").replace(":", ".");
 
-//                _subha_sadiqs=_subha_sadiq.split(":");
-//                _fajar_jamats = _fajar_jamat.split(":");
-//                _sunrises=_sunrise.split(":");
-//                _Zohars=_Zohar.split(":");
-//                _Zohar_js=_Zohar_j.split(":");
-//                _Asars=_Asar.split(":");
-//                _Asar_js=_Asar_j.split(":");
-//                _Maghribs=_Maghrib.split(":");
-//                _Maghirb_js=_Maghirb_j.split(":");
-//                _Eshas=_Esha.split(":");
-//                _Esha_js=_Esha_j.split(":");
-
                 Zohar.setText(obj.getString("Zohar"));
 
                 Zohar_j.setText(obj.getString("Zohar-j"));
@@ -393,166 +383,286 @@ if(!PrimaryTimeTable &&!Event &&!notes) {
     }
 
 public void calculateTime() throws ParseException {
-
-
     TextView NextPrayer =(TextView)getView().findViewById(R.id.NextPrayer);
     TextView SecondPrayer =(TextView)getView().findViewById(R.id.SecondPrayer);
+    int[] result;
     Date d= new Date();
     String s= df.format(d);
     s=s.replace(":",".");
-//    Log.e("Sting time", s + "");
-        Double hour = 4.0;//Double.parseDouble(s);
-        Log.e("double time", hour + "");
+
+    Double hour = Double.parseDouble(s);
+    Log.e("double time", hour + "");
 
     double fajar = Double.parseDouble(_fajar_jamat);
+    _fajar_jamat=fajar+"";
 
     double subha_sadiq= Double.parseDouble(_subha_sadiq) ;
-
-
+    _subha_sadiq=subha_sadiq+"";
 
     double sunrise=Double.parseDouble(_sunrise);
+    _sunrise =sunrise+"";
 
     double zohar = Double.parseDouble(_Zohar) +12;
+    _Zohar=zohar+"";
+
     double zoharj = Double.parseDouble(_Zohar_j)+12;
+    _Zohar_j=zoharj+"";
 
     double asar= Double.parseDouble(_Asar)+12;
+    _Asar=asar+"";
+
     double asarj= Double.parseDouble(_Asar_j)+12;
+    _Asar_j=asarj+"";
 
     double maghrib=Double.parseDouble(_Maghrib)+12;
+    _Maghrib=maghrib+"";
+
     double maghribj=Double.parseDouble(_Maghirb_j)+12;
+        _Maghirb_j=maghribj+"";
 
     double esha =Double.parseDouble(_Esha)+12;
-    double eshaj =Double.parseDouble(_Esha_j)+12;
+    _Esha=esha+"";
 
-    Toast.makeText(getActivity().getApplicationContext(),"."+hour +" --"+subha_sadiq,
-            Toast.LENGTH_LONG).show();
-Log.e("subha sadiq", "" + subha_sadiq);
-Log.e("Fajar", "" + fajar);
-Log.e("subrise", "" + sunrise);
-Log.e("zohar", "" + zohar);
-Log.e("zohar j", "" + zoharj);
-Log.e("asar", "" + asar);
-Log.e("asar j", "" + asarj);
-Log.e("maghirb ", "" + maghrib);
-Log.e("magr b j", "" + maghribj);
-Log.e("esha ", "" + esha);
-Log.e("esha j",""+eshaj);
-double remaining_Time=0;
+    double eshaj =Double.parseDouble(_Esha_j)+12;
+    _Esha_j=eshaj+"";
 
     if(hour < subha_sadiq ||hour >eshaj )
     {
-                remaining_Time=subha_sadiq- hour;
-        Toast.makeText(getActivity().getApplicationContext(),"subha sadiq" , Toast.LENGTH_SHORT).show();
-        Log.e("Next time ", " subha sadiq is next");
-        NextPrayer.setText("Subha sadiq begins in " + remaining_Time);
-
-        remaining_Time=fajar -hour;
-        SecondPrayer.setText("Fajar begins in "+remaining_Time);
+      result=  RemainingTime(s , _subha_sadiq);
+        NextPrayer.setText("Subha sadiq begins in " +result[0] +"hour"+result[1] +"min" );
+        result=   RemainingTime(s , _fajar_jamat);
+        SecondPrayer.setText("Fajar begins in "+result[0] +"hour"+result[1] +"min" );
 
     }
     if(hour < fajar && hour > subha_sadiq)
 {
-    remaining_Time=fajar -hour;
+    result=   RemainingTime(s , _fajar_jamat);
+   NextPrayer.setText("Fajar begins in " + result[0] + "hour" + result[1] + "min");
 
-    Toast.makeText(getActivity().getApplicationContext(),"fajr" , Toast.LENGTH_SHORT).show();
-    Log.e("Next time ", " Fajar  is next");
-
-   NextPrayer.setText("Fajar begins in "+remaining_Time );
-
-
-
-    remaining_Time=sunrise-hour;
-SecondPrayer.setText("Sunrise in "+remaining_Time);
+    result=  RemainingTime(s , _sunrise);
+SecondPrayer.setText("Sunrise in "+result[0] +"hour"+result[1] +"min");
 }
 
     if(hour < sunrise && hour > fajar)
     {
-        remaining_Time=sunrise-hour;
-        Toast.makeText(getActivity().getApplicationContext(),"foundsunrise" , Toast.LENGTH_SHORT).show();
-        Log.e("Next time ", " sunrise  is next");
-        NextPrayer.setText("Sunrise in " + remaining_Time);
-        remaining_Time=zohar - hour;
-        SecondPrayer.setText("Sunrise in " + remaining_Time);
+        result=  RemainingTime(s , _sunrise);
+        NextPrayer.setText("Sunrise in " + result[0] +"hour"+result[1] +"min");
+        result=   RemainingTime(s , _Zohar);
+        SecondPrayer.setText("Zohar in " + result[0] +"hour"+result[1] +"min");
     }
 
     if(hour < zohar && hour > sunrise )
     {
-        remaining_Time=zohar-hour;
-        Toast.makeText(getActivity().getApplicationContext(),"zohar" , Toast.LENGTH_SHORT).show();
-        Log.e("Next time ", " zohar is next");
-        NextPrayer.setText("Zohar begins in " + remaining_Time);
+        result=   RemainingTime(s , _Zohar);
+        NextPrayer.setText("Zohar begins in " + result[0] + "hour" + result[1] + "min");
 
-        remaining_Time=zoharj-hour;
+        result=     RemainingTime(s , _Zohar_j);
+        SecondPrayer.setText("Zohar jamat in " + result[0] +"hour"+result[1] +"min");
 
     }
     if(hour < zoharj && hour > zohar )
     {
-        remaining_Time=zoharj-hour;
-        Toast.makeText(getActivity().getApplicationContext(),"zohar jamat" , Toast.LENGTH_SHORT).show();
-        Log.e("Next time ", " zohar jamat is next");
-        NextPrayer.setText("Zohar Jamat begins in " + remaining_Time);
+        result=     RemainingTime(s , _Zohar_j);
+        NextPrayer.setText("Zohar Jamat begins in " + result[0] + "hour" + result[1] + "min");
 
-        remaining_Time=asar-hour;
+        result=     RemainingTime(s , _Asar);
+        SecondPrayer.setText("Asar in " + result[0] +"hour"+result[1] +"min");
     }
     if(hour < asar && hour > zoharj)
     {
-        remaining_Time=asar-hour;
-        Toast.makeText(getActivity().getApplicationContext(),"asar" , Toast.LENGTH_SHORT).show();
-        Log.e("Next time ", " asar is next");
-        NextPrayer.setText("Asar begins in " + remaining_Time);
+        result=     RemainingTime(s , _Asar);
+        NextPrayer.setText("Asar begins in " + result[0] + "hour" + result[1] + "min");
 
-        remaining_Time=asarj-hour;
+        result=     RemainingTime(s , _Asar_j);
+        SecondPrayer.setText("Asar jamat begins in " + result[0] +"hour"+result[1] +"min");
     }
     if(hour < asarj&& hour > asar)
     {
-        remaining_Time=asarj-hour;
-        Toast.makeText(getActivity().getApplicationContext(),"asar jamt" , Toast.LENGTH_SHORT).show();
-        Log.e("Next time ", " asar jamat is next");
-        NextPrayer.setText("ASAR Jamat begins in " + remaining_Time);
+        result=     RemainingTime(s , _Asar_j);
+        NextPrayer.setText("ASAR Jamat begins in " + result[0] + "hour" + result[1] + "min");
 
-        remaining_Time=maghrib-hour;
+        result=      RemainingTime(s , _Maghrib);
+        SecondPrayer.setText("Maghrib begins in " + result[0] +"hour"+result[1] +"min");
     }
     if(hour < maghrib && hour > asarj)
     {
-        remaining_Time=maghrib-hour;
-    Toast.makeText(getActivity().getApplicationContext(),"maghirb" , Toast.LENGTH_SHORT).show();
-    Log.e("Next time ", " maghirb is next");
-    NextPrayer.setText("Maghrib begins in " + remaining_Time);
+        result=      RemainingTime(s , _Maghrib);
+        NextPrayer.setText("Maghrib begins in " + result[0] +"hour"+result[1] +"min");
 
-        remaining_Time=maghribj-hour;
+       result=     RemainingTime(s , _Maghirb_j);
+        SecondPrayer.setText("Maghrib jamat begins in " + result[0] +"hour"+result[1] +"min");
     }
     if(hour < maghribj && hour > maghrib)
     {
-        remaining_Time=maghribj-hour;
-        Toast.makeText(getActivity().getApplicationContext(),"maghrib jamat" , Toast.LENGTH_SHORT).show();
-        Log.e("Next time ", " maghrib jamat is next");
-        NextPrayer.setText("Maghrib jamat begins in " + remaining_Time);
+        result=     RemainingTime(s , _Maghirb_j);
+        NextPrayer.setText("Maghrib jamat begins in " + result[0] + "hour" + result[1] + "min");
 
-        remaining_Time=esha-hour;
+        result=    RemainingTime(s , _Esha);
+        SecondPrayer.setText("Esha  begins in " + result[0] +"hour"+result[1] +"min");
     }
     if(hour < esha && hour > maghribj)
     {
-        remaining_Time=esha-hour;
-        Toast.makeText(getActivity().getApplicationContext(),"esha" , Toast.LENGTH_SHORT).show();
-        Log.e("Next time ", " esha is next");
-        NextPrayer.setText("Esha  begins in "+remaining_Time);
+        result=    RemainingTime(s , _Esha);
+        NextPrayer.setText("Esha  begins in " + result[0] + "hour" + result[1] + "min");
 
-        remaining_Time=eshaj-hour;
+        result=     RemainingTime(s , _Esha_j);
+        SecondPrayer.setText("Esha jamat begins in " + result[0] +"hour"+result[1] +"min");
     }
     if(hour < eshaj&& hour > esha)
     {
-        remaining_Time=eshaj-hour;
-        Toast.makeText(getActivity().getApplicationContext(),"esha jamat" , Toast.LENGTH_SHORT).show();
-        Log.e("Next time ", " esha jamat is next");
-        NextPrayer.setText("Esha Jamat begins in "+remaining_Time);
+        result=     RemainingTime(s , _Esha_j);
+        NextPrayer.setText("Esha Jamat begins in " + result[0] + "hour" + result[1] + "min");
+        result=     RemainingTime(s , _subha_sadiq);
+        SecondPrayer.setText("Subha sadiq begins in " + result[0] +"hour"+result[1] +"min");
     }
 
-
-
-
-
-
-
 }
+    public int[] RemainingTime(String CurrentTime,String  prayer_time) {
+        String[] ans;
+        String[] CurrentTime_ans;
+        int[] result = new int[2];
+
+        ans = prayer_time.split("\\.");
+        int hour = Integer.parseInt(ans[0]);
+        int min = Integer.parseInt(ans[1]);
+        min = min + hour * 60;
+
+        CurrentTime_ans = CurrentTime.split("\\.");
+        int Current_hour = Integer.parseInt(CurrentTime_ans[0].trim());
+        int Current_min = Integer.parseInt(CurrentTime_ans[1].trim());
+        Current_min = Current_min + Current_hour * 60;
+
+        int Total_min = min - Current_min;
+        int R_hour = Total_min / 60;
+        int R_min = Total_min % 60;
+        Log.e("Remain hour : min", "" + Total_min + "\n" + R_hour + ":" + R_min);
+
+        //---- changing for meters----------------
+        if (R_hour < 2) {          // lesser than 2hours
+
+            ImageView Image1 = (ImageView) getView().findViewById(R.id.imageView);
+            ImageView Image2 = (ImageView) getView().findViewById(R.id.imageView2);
+            ImageView Image3 = (ImageView) getView().findViewById(R.id.imageView3);
+            ImageView Image4 = (ImageView) getView().findViewById(R.id.imageView4);
+            ImageView Image5 = (ImageView) getView().findViewById(R.id.imageView5);
+            ImageView Image6 = (ImageView) getView().findViewById(R.id.imageView6);
+            ImageView Image7 = (ImageView) getView().findViewById(R.id.imageView7);
+            ImageView Image8 = (ImageView) getView().findViewById(R.id.imageView8);
+            ImageView Image9 = (ImageView) getView().findViewById(R.id.imageView9);
+            ImageView Image10 = (ImageView) getView().findViewById(R.id.imageView12);
+            ImageView Image11 = (ImageView) getView().findViewById(R.id.imageView13);
+            ImageView Image12 = (ImageView) getView().findViewById(R.id.imageView14);
+
+// each green dot represent 10 min ...  If 1 dots is present it means that 10 mints are passed and 50 mints remaining
+
+                    if (Total_min < 10) {
+                        Image1.setBackgroundResource(R.drawable.dot_green);
+                        Log.e("1:60", "");
+                    }
+                    if (Total_min < 20) {
+                        Image2.setBackgroundResource(R.drawable.dot_green);
+                        Log.e("2:60", "");
+                    }
+                    if (Total_min < 30) {
+                        Image3.setBackgroundResource(R.drawable.dot_green);
+                        Log.e("3:60", "");
+                    }
+                    if (Total_min < 40) {
+                        Image4.setBackgroundResource(R.drawable.dot_green);
+                        Log.e("4:60", "");
+                    }
+                    if (Total_min< 50) {
+                        Image5.setBackgroundResource(R.drawable.dot_green);
+                        Log.e("5:60", "");
+                    }
+                    if (Total_min < 60) {
+                        Image6.setBackgroundResource(R.drawable.dot_green);
+                        Log.e("6:60", "");
+                    }
+
+                    if (Total_min < 70) {
+                        Image7.setBackgroundResource(R.drawable.dot_green);
+                        Log.e("10", "");
+                    }
+                    if (Total_min < 80) {
+                        Image8.setBackgroundResource(R.drawable.dot_green);
+                        Log.e("20", "");
+                    }
+                    if (Total_min < 90) {
+                        Image9.setBackgroundResource(R.drawable.dot_green);
+                        Log.e("30", "");
+                    }
+                    if (Total_min < 100) {
+                        Image10.setBackgroundResource(R.drawable.dot_green);
+                        Log.e("40", "");
+                    }
+                    if (Total_min < 110) {
+                        Image11.setBackgroundResource(R.drawable.dot_green);
+                        Log.e("50", "");
+                    }
+                    if (Total_min < 120) {
+                        Image12.setBackgroundResource(R.drawable.dot_green);
+                        Log.e("60", "");
+                    }
+                }
+        else {
+                ImageView Image1 = (ImageView) getView().findViewById(R.id.imageView15);
+                ImageView Image10 = (ImageView) getView().findViewById(R.id.imageView16);
+                ImageView Image7 = (ImageView) getView().findViewById(R.id.imageView17);
+                ImageView Image8 = (ImageView) getView().findViewById(R.id.imageView18);
+                ImageView Image9 = (ImageView) getView().findViewById(R.id.imageView19);
+                ImageView Image11 = (ImageView) getView().findViewById(R.id.imageView20);
+                ImageView Image12 = (ImageView) getView().findViewById(R.id.imageView21);
+                ImageView Image2 = (ImageView) getView().findViewById(R.id.imageView22);
+                ImageView Image3 = (ImageView) getView().findViewById(R.id.imageView23);
+                ImageView Image4 = (ImageView) getView().findViewById(R.id.imageView24);
+                ImageView Image5 = (ImageView) getView().findViewById(R.id.imageView25);
+                ImageView Image6 = (ImageView) getView().findViewById(R.id.imageView26);
+
+                if (Total_min < 130) {
+                    Image3.setBackgroundResource(R.drawable.dot_red);
+                }
+                if (Total_min < 140) {
+                    Image4.setBackgroundResource(R.drawable.dot_red);
+                }
+                if (Total_min< 150) {
+                    Image5.setBackgroundResource(R.drawable.dot_red);
+                }
+                if (Total_min < 160) {
+                    Image6.setBackgroundResource(R.drawable.dot_red);
+                }
+
+                if (Total_min < 170) {
+                    Image7.setBackgroundResource(R.drawable.dot_red);
+                }
+                if (Total_min < 180) {
+                    Image8.setBackgroundResource(R.drawable.dot_red);
+                }
+                if (Total_min < 190) {
+                    Image9.setBackgroundResource(R.drawable.dot_red);
+                }
+                if (Total_min < 200) {
+                    Image10.setBackgroundResource(R.drawable.dot_red);
+                }
+                if (Total_min < 210) {
+                    Image11.setBackgroundResource(R.drawable.dot_red);
+                }
+                if (Total_min < 220) {
+                    Image12.setBackgroundResource(R.drawable.dot_red);
+                }
+                if (Total_min < 230) {
+                    Image1.setBackgroundResource(R.drawable.dot_red);
+                }
+                if (Total_min < 240) {
+                    Image2.setBackgroundResource(R.drawable.dot_red);
+                }
+
+            }
+
+            result[0] = R_hour;
+            result[1] = R_min;
+            return result;
+        }
+
 }
 
