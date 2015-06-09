@@ -1,8 +1,10 @@
 package com.microcave.masjidtimetable;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,10 +23,15 @@ import android.widget.Toast;
 
 import com.microcave.masjidtimetable.util.classes.GetDataFromWebservice;
 import com.microcave.masjidtimetable.util.classes.I_MasjiddetailPage;
+import com.microcave.masjidtimetable.util.classes.MasjidSQLContract;
+import com.microcave.masjidtimetable.util.classes.MasjidSQLLiteOpenHelper;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.zip.CheckedOutputStream;
 
 
@@ -37,6 +44,11 @@ public class MasjidDetail_fragment extends Fragment implements I_MasjiddetailPag
     JSONObject obj;
     JSONArray arr;
     Context context;
+    SQLiteDatabase db;
+    String Month="Current";
+    SimpleDateFormat sdf= new SimpleDateFormat("dd-MM");
+    int count=0;
+    int _ID;
 
     public static MasjidDetail_fragment newInstance(String param1, String param2) {
         MasjidDetail_fragment fragment = new MasjidDetail_fragment();
@@ -52,9 +64,14 @@ public class MasjidDetail_fragment extends Fragment implements I_MasjiddetailPag
         // Required empty public constructor
     }
 
+    Date d ;
+    String[] date;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        db= new MasjidSQLLiteOpenHelper(getActivity()).getWritableDatabase();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -65,14 +82,14 @@ public class MasjidDetail_fragment extends Fragment implements I_MasjiddetailPag
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        new HttpAsyncTask().execute("http://www.masjid-timetable.com/data/timetable.php?masjid_id=1");
+
         return inflater.inflate(R.layout.fragment_masjid_detail_fragment, container, false);
     }
 
 
     @Override
     public void SetDetail(String Masjid, String LocalArea, String LargerArea, String postcode, String Country, String phone,String ID) {
-        Log.e("value of masjid", Masjid + "\n" + LocalArea + "\n" + LargerArea + "\n" + Country);
+      //  Log.e("value of masjid", Masjid + "\n" + LocalArea + "\n" + LargerArea + "\n" + Country);
 
         TextView tv2 = (TextView) getView().findViewById(R.id.textView7);
         TextView tv3 = (TextView) getView().findViewById(R.id.textView8);
@@ -85,7 +102,20 @@ public class MasjidDetail_fragment extends Fragment implements I_MasjiddetailPag
         tv5.setText(postcode);
         tv6.setText(Country);
         phone_number = phone;
-        Log.e("Masjid ID", ""+ID);
+
+
+
+        d= new Date();
+        String s = sdf.format(d);
+        date = s.split("-");
+
+        Log.e("Masjid ID", "" + ID);
+        Log.e("Day", "" + date[0]);
+        Log.e("month", "" + date[1]);
+
+
+        new HttpAsyncTask().execute("http://www.masjid-timetable.com/data/timetable.php?masjid_id=" + ID +"&&month="+
+                                    date[1] );
 
 
     }
@@ -115,87 +145,60 @@ public class MasjidDetail_fragment extends Fragment implements I_MasjiddetailPag
             return GetDataFromWebservice.GET(urls[0]);
         }
         // onPostExecute displays the results of the AsyncTask.
+
+
+        ContentValues val= new ContentValues();
+
         @Override
         protected void onPostExecute(String result)
 
         {
-            Log.e("IN post function", " vlaue is true" + result);
-            if(context!=null) {
-                Toast.makeText(context, "Context is available.", Toast.LENGTH_LONG).show();
-            }
-            try {
-                arr = new JSONArray(result);
-                Log.e("JSON TRY block =>", " "+arr.get(0));
-                for(int i=0;i<arr.length();i++) {
-                    obj = arr.getJSONObject(i);
-                    TableLayout _TimeTable= (TableLayout)getView().findViewById(R.id.NamazTable);
+                try {
+                    arr = new JSONArray(result);
+                    Log.e("JSON TRY block =>", " ");
+                    for(int i=0;i<arr.length();i++) {
+                        obj = arr.getJSONObject(i);
 
-                  TableRow TR= new TableRow(getActivity().getApplicationContext());
+                        val.put(MasjidSQLContract.tables.PrayerTime.DATE,obj.getString("DATE"));
+                        val.put(MasjidSQLContract.tables.PrayerTime.SubhaSadiq,obj.getString("Subah Sadiq"));
 
-                    TR.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-                    TextView  Date=new TextView(getActivity().getApplicationContext());
+                        val.put(MasjidSQLContract.tables.PrayerTime.Fajar_J,obj.getString("Fajar"));
+                        val.put(MasjidSQLContract.tables.PrayerTime.Sunrise,obj.getString("Sunrise"));
 
-                    TextView  SubhaSadiq=new TextView(getActivity().getApplicationContext());
-                    TextView  Fajar=new TextView(getActivity().getApplicationContext());
-                    TextView  Sunrise=new TextView(getActivity().getApplicationContext());
+                        val.put(MasjidSQLContract.tables.PrayerTime.Asar_b,obj.getString("Asar"));
+                        val.put(MasjidSQLContract.tables.PrayerTime.Asar_j,obj.getString("Asar-j"));
 
-                    TextView  Zohar=new TextView(getActivity().getApplicationContext());
-                    TextView  Zohar_j=new TextView(getActivity().getApplicationContext());
+                        val.put(MasjidSQLContract.tables.PrayerTime.Esha_b,obj.getString("Esha"));
+                        val.put(MasjidSQLContract.tables.PrayerTime.Esha_j,obj.getString("Esha-j"));
 
-                    TextView  Asar=new TextView(getActivity().getApplicationContext());
-                    TextView  Asar_j=new TextView(getActivity().getApplicationContext());
-
-                    TextView  Maghrib_j=new TextView(getActivity().getApplicationContext());
-                    TextView  Maghrib=new TextView(getActivity().getApplicationContext());
-
-                    TextView  Esha=new TextView(getActivity().getApplicationContext());
-                    TextView  Esha_j=new TextView(getActivity().getApplicationContext());
-
-                    Date.setText(obj.getString("DATE"));
-                    SubhaSadiq.setText(obj.getString("Subah Sadiq"));
-
-                    Fajar.setText(obj.getString("Fajar"));
-                    Sunrise.setText(obj.getString("Sunrise"));
-
-                    Asar.setText(obj.getString(" Asar"));
-                    Asar_j.setText(obj.getString("Asar-j"));
-
-                    Esha.setText(obj.getString("Esha"));
-                    Esha_j.setText(obj.getString("Esha-j"));
-
-                    Maghrib_j.setText(obj.getString("Maghrib"));
-                    Maghrib.setText(obj.getString("Sunset"));
+                        val.put(MasjidSQLContract.tables.PrayerTime.Maghrib_j,obj.getString("Maghrib"));
+                        val.put(MasjidSQLContract.tables.PrayerTime.Maghrib_b,obj.getString("Sunset"));
 
 
-                    Zohar.setText(obj.getString("Zohar"));
-                    Zohar_j.setText(obj.getString("Zohar-j"));
+                        val.put(MasjidSQLContract.tables.PrayerTime.Zohar_b,obj.getString("Zohar"));
+                        val.put(MasjidSQLContract.tables.PrayerTime.Zohar_j,obj.getString("Zohar-j"));
+                        val.put(MasjidSQLContract.tables.PrayerTime.Type,Month);
+                        Log.e("Type",Month+count);
 
-                    Log.e("Fajar:", obj.getString("Fajar"));
 
-                    TR.addView(Date);
-                    TR.addView(SubhaSadiq);
-                    TR.addView(Fajar);
-                    TR.addView(Sunrise);
-                    TR.addView(Zohar);
-                    TR.addView(Zohar_j);
-                    TR.addView(Asar);
-                    TR.addView(Asar_j);
-                    TR.addView(Maghrib);
-                    TR.addView(Maghrib_j);
-                    TR.addView(Esha);
-                    TR.addView(Esha_j);
-                    _TimeTable.addView(TR);
+                        db.insert(MasjidSQLContract.tables.PrayerTime.TableName,null,val);
+                    }
+                    if(count==0)
+                    {
+                            int n= Integer.parseInt(date[1])+1;
+                        new HttpAsyncTask().execute("http://www.masjid-timetable.com/data/timetable.php?masjid_id=" + _ID +"&&month="+
+                                n  );
+                        Log.e("NExt Month", n + "");
+                        Month="Next";
+                        count++;
+                    }
 
-                    Toast.makeText(getActivity().getApplicationContext(),
-                             "hello !!! context is present ", Toast.LENGTH_SHORT).show();
-                             ;
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
                 }
 
 
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
         }
     }
 

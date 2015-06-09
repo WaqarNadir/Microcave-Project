@@ -1,5 +1,7 @@
 package com.microcave.masjidtimetable.util.classes;
 
+import android.graphics.Color;
+
 public class CustomListView  implements Comparable<CustomListView>{
 	
 	private String m_name;
@@ -8,6 +10,7 @@ public class CustomListView  implements Comparable<CustomListView>{
 	private int icon;
 	private int icon1;
 	private int icon2;
+	private int color= Color.WHITE;
 	public int counter=0;
 		
 	public CustomListView(){}
@@ -79,5 +82,13 @@ public class CustomListView  implements Comparable<CustomListView>{
 			return num;
 		}
 		return 0;
+	}
+
+	public int getColor() {
+		return color;
+	}
+
+	public void setColor(int color) {
+		this.color = color;
 	}
 }

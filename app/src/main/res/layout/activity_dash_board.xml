@@ -147,6 +147,7 @@
         android:layout_below="@+id/Container"
         android:layout_marginTop="55dp"
         android:src="@drawable/settings_btn"
+        android:onClick="Setting"
         android:layout_alignLeft="@+id/imageView10"
         android:layout_alignStart="@+id/imageView10"
         android:layout_alignRight="@+id/imageView10"

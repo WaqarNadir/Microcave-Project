@@ -1,11 +1,14 @@
 package com.microcave.masjidtimetable;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.microcave.masjidtimetable.util.classes.MasjidSQLLiteOpenHelper;
 
 
 public class DashBoard extends ActionBarActivity {
@@ -14,6 +17,8 @@ public class DashBoard extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
+
+
     }
 
 public  void  SelectMasjid(View v)
@@ -77,6 +82,12 @@ public  void  SelectMasjid(View v)
     public  void  Timetable(View v)
     {
         Intent i= new Intent(this,TimeTable.class);
+        startActivity(i);
+
+    }
+    public  void  Setting(View v)
+    {
+        Intent i= new Intent(this,Setting.class);
         startActivity(i);
 
     }

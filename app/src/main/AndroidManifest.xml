@@ -4,7 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.call_phone" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.telephony"
@@ -86,6 +88,35 @@
             android:name=".TimeTable"
             android:label="@string/title_activity_time_table" >
         </activity>
+        <activity
+            android:name=".Setting"
+            android:label="@string/title_activity_setting" >
+        </activity>
+
+        <service
+            android:name=".util.classes.AlarmService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+
+        <activity
+            android:name=".util.classes.DemoAlarmActivity"
+            android:label="@string/title_activity_demo_alarm"
+
+            android:exported="true">
+        </activity>
+
+        <receiver
+            android:name=".TimeChangedReciever"
+            android:enabled="true"
+            android:exported="true"
+
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.TIME_SET" />
+            </intent-filter>
+
+        </receiver>
     </application>
 
 </manifest>

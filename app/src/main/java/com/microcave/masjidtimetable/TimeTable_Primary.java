@@ -1,6 +1,10 @@
 package com.microcave.masjidtimetable;
 
 import android.app.Activity;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,6 +25,8 @@ import android.widget.Toast;
 import com.microcave.masjidtimetable.util.classes.Communicator_fragment;
 import com.microcave.masjidtimetable.util.classes.ConnectionDetector;
 import com.microcave.masjidtimetable.util.classes.GetDataFromWebservice;
+import com.microcave.masjidtimetable.util.classes.MasjidSQLContract;
+import com.microcave.masjidtimetable.util.classes.MasjidSQLLiteOpenHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,6 +56,7 @@ public class TimeTable_Primary extends Fragment {
     JSONObject obj;
     Long subtract;
     Date d;
+    SharedPreferences prefs;
     Communicator_fragment data;
     ConnectionDetector cd;
     boolean Event=false;
@@ -100,6 +107,7 @@ String _Esha_j;
 
     private OnFragmentInteractionListener mListener;
 
+
     public static TimeTable_Primary newInstance(String param1, String param2) {
         TimeTable_Primary fragment = new TimeTable_Primary();
         Bundle args = new Bundle();
@@ -113,10 +121,20 @@ String _Esha_j;
         // Required empty public constructor
     }
 
+    SQLiteDatabase db;
+    ContentValues value = new ContentValues();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        db = new MasjidSQLLiteOpenHelper(getActivity()).getReadableDatabase();
+        value = new ContentValues();
+
+
         cd = new ConnectionDetector(getActivity().getApplicationContext());
+
+       prefs = getActivity().getSharedPreferences(
+                "com.microcave.masjidtimetable", Context.MODE_PRIVATE);
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -141,7 +159,6 @@ String _Esha_j;
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-
         Log.e("PRimary ID",""+frag_SelectMasjid.Primary_Masjid_ID);
 //        if(cd.isConnectingToInternet()) {
             // start loader
@@ -151,7 +168,7 @@ String _Esha_j;
 
               //------------------------IMP---------------------------------------------------------
         //        ----------------Remember to change value --------------------------------
-             new HttpAsyncTask().execute(Masjid_Prayer_Time_URL+"1");    //frag_SelectMasjid.Primary_Masjid_ID
+             new HttpAsyncTask().execute(Masjid_Prayer_Time_URL+"1"+"&&day="+5+ "&&month="+6 );    //frag_SelectMasjid.Primary_Masjid_ID
              new HttpAsyncTask().execute(Event_URL+"179");    //frag_SelectMasjid.Primary_Masjid_ID
              new HttpAsyncTask().execute(Notes_URL+"21");    //frag_SelectMasjid.Primary_Masjid_ID
              new HttpAsyncTask().execute(Donation_URL+"21");    //frag_SelectMasjid.Primary_Masjid_ID
@@ -181,7 +198,7 @@ String _Esha_j;
         protected String doInBackground(String... urls)
         {
             Log.e("URL Matched",""+urls[0]);
-            if(urls[0].contentEquals(Masjid_Prayer_Time_URL+"1"))  //frag_SelectMasjid.Primary_Masjid_ID
+            if(urls[0].contentEquals(Masjid_Prayer_Time_URL+"1"+"&&day="+5+ "&&month="+6))  //frag_SelectMasjid.Primary_Masjid_ID
             {
                 Log.e("URL Matched","");
                 PrimaryTimeTable=true;
@@ -282,6 +299,7 @@ if(!PrimaryTimeTable &&!Event &&!notes) {
                 _Esha=obj.getString("Esha").replace(":", ".");
                 _Esha_j=obj.getString("Esha-j").replace(":", ".");
 
+                Log.e("ZOhar val", _Zohar_j);
                 Zohar.setText(obj.getString("Zohar"));
 
                 Zohar_j.setText(obj.getString("Zohar-j"));
@@ -325,6 +343,16 @@ if(!PrimaryTimeTable &&!Event &&!notes) {
                 EventTme.setText(obj.getString("event_time"));
                 EventTitle.setText(obj.getString("event_title"));
                 EventDetail.setText(obj.getString("event_details"));
+
+                value.put(MasjidSQLContract.tables.Masjid_Detail.masjid_name,
+                        obj.getString("event_date")           + "|" +
+                                obj.getString("event_time")   + "|" +
+                                obj.getString("event_title")  + "|" +
+                                obj.getString("event_details") +"^"
+                );
+
+                db.update(MasjidSQLContract.tables.Masjid_Detail.TableName,value
+                ,MasjidSQLContract.tables.Masjid_Detail.masjid_ID +" = 188 ",null);
 
             }
 
@@ -392,39 +420,49 @@ public void calculateTime() throws ParseException {
 
     Double hour = Double.parseDouble(s);
     Log.e("double time", hour + "");
+        s=hour+"";
 
     double fajar = Double.parseDouble(_fajar_jamat);
-    _fajar_jamat=fajar+"";
+    _fajar_jamat=String.format( "%.2f",fajar);
 
     double subha_sadiq= Double.parseDouble(_subha_sadiq) ;
-    _subha_sadiq=subha_sadiq+"";
+    _subha_sadiq=String.format( "%.2f",subha_sadiq);
 
     double sunrise=Double.parseDouble(_sunrise);
-    _sunrise =sunrise+"";
+    _sunrise =String.format( "%.2f",sunrise);
 
     double zohar = Double.parseDouble(_Zohar) +12;
-    _Zohar=zohar+"";
+    _Zohar=String.format( "%.2f",zohar);
 
     double zoharj = Double.parseDouble(_Zohar_j)+12;
-    _Zohar_j=zoharj+"";
+
+    _Zohar_j=String.format( "%.2f",zoharj );
 
     double asar= Double.parseDouble(_Asar)+12;
-    _Asar=asar+"";
+    _Asar=String.format( "%.2f",asar);
 
     double asarj= Double.parseDouble(_Asar_j)+12;
-    _Asar_j=asarj+"";
+    _Asar_j=String.format( "%.2f",asarj);
 
     double maghrib=Double.parseDouble(_Maghrib)+12;
-    _Maghrib=maghrib+"";
+    _Maghrib=String.format( "%.2f",maghrib);
 
     double maghribj=Double.parseDouble(_Maghirb_j)+12;
-        _Maghirb_j=maghribj+"";
+        _Maghirb_j=String.format( "%.2f",maghribj);
 
     double esha =Double.parseDouble(_Esha)+12;
-    _Esha=esha+"";
+    _Esha=String.format( "%.2f",esha);
 
     double eshaj =Double.parseDouble(_Esha_j)+12;
-    _Esha_j=eshaj+"";
+    _Esha_j=String.format( "%.2f",eshaj);
+
+    prefs.edit().putString("Primary_Fajar_jamat",_fajar_jamat);
+    prefs.edit().putString("Primary_Zohar_jamat",_Zohar_j);
+    prefs.edit().putString("Primary_Asar_jamat",_Asar_j);
+    prefs.edit().putString("Primary_Maghrib_jamat", _Maghirb_j);
+    prefs.edit().putString("Primary_Esha_jamat", _Esha_j);
+    prefs.edit().commit();
+
 
     if(hour < subha_sadiq ||hour >eshaj )
     {
@@ -505,13 +543,14 @@ SecondPrayer.setText("Sunrise in "+result[0] +"hour"+result[1] +"min");
         result=    RemainingTime(s , _Esha);
         NextPrayer.setText("Esha  begins in " + result[0] + "hour" + result[1] + "min");
 
-        result=     RemainingTime(s , _Esha_j);
+        result=     RemainingTime(s , _subha_sadiq);        // chagned
         SecondPrayer.setText("Esha jamat begins in " + result[0] +"hour"+result[1] +"min");
     }
     if(hour < eshaj&& hour > esha)
     {
         result=     RemainingTime(s , _Esha_j);
         NextPrayer.setText("Esha Jamat begins in " + result[0] + "hour" + result[1] + "min");
+
         result=     RemainingTime(s , _subha_sadiq);
         SecondPrayer.setText("Subha sadiq begins in " + result[0] +"hour"+result[1] +"min");
     }
@@ -526,15 +565,24 @@ SecondPrayer.setText("Sunrise in "+result[0] +"hour"+result[1] +"min");
         int hour = Integer.parseInt(ans[0]);
         int min = Integer.parseInt(ans[1]);
         min = min + hour * 60;
-
+        Log.e("Now ", CurrentTime);
+        Log.e("Now prayr", prayer_time);
         CurrentTime_ans = CurrentTime.split("\\.");
         int Current_hour = Integer.parseInt(CurrentTime_ans[0].trim());
         int Current_min = Integer.parseInt(CurrentTime_ans[1].trim());
         Current_min = Current_min + Current_hour * 60;
 
         int Total_min = min - Current_min;
+
         int R_hour = Total_min / 60;
         int R_min = Total_min % 60;
+        if(R_hour < 0)
+        {
+            Total_min= 24*60 +Total_min;
+             R_hour = Total_min / 60;
+             R_min = Total_min % 60;
+
+        }
         Log.e("Remain hour : min", "" + Total_min + "\n" + R_hour + ":" + R_min);
 
         //---- changing for meters----------------
@@ -659,8 +707,9 @@ SecondPrayer.setText("Sunrise in "+result[0] +"hour"+result[1] +"min");
 
             }
 
-            result[0] = R_hour;
-            result[1] = R_min;
+            result[0] =R_hour;
+            result[1] =R_min;
+
             return result;
         }
 

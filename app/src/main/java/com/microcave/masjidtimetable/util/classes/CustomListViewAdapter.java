@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,7 +28,7 @@ public class CustomListViewAdapter extends BaseAdapter {
 	private int Primarypos= -333	;
 	private int Secondarypos = -333;
 	private int Ternarypos = -333;
-	private int Quatarypos = -33;
+	private int Quatarypos = -333;
 
 	int color=Color.WHITE;
 	public   boolean already_clicked=false;
@@ -36,6 +37,7 @@ public class CustomListViewAdapter extends BaseAdapter {
 	public   boolean Q_already_clicked=false;
 	int type;
 
+	SharedPreferences pref ;
 
 	public void setSelectedPosition(int pos){
 		Primary = pos;
@@ -47,6 +49,7 @@ public class CustomListViewAdapter extends BaseAdapter {
 	public CustomListViewAdapter(Context context, ArrayList<CustomListView> CustomListViewItems){
 		this.context = context;
 		this.CustomListViewItems = CustomListViewItems;
+		pref= context.getSharedPreferences("ListValues",Context.MODE_PRIVATE);
 	}
 
 
@@ -74,48 +77,62 @@ public class CustomListViewAdapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.custom_list_view, null);
 
         }
+		//Primarypos=pref.getInt("Primary_pos",-909);
 
-		if (Primary == position ) {
-			Log.e("In primary","");
+
+		if (Primary == position  ) {
+		//	Log.e("In primary",""+Primarypos);
 			if(!already_clicked) {
-				convertView.setBackgroundColor(Color.GREEN);
+				//convertView.setBackgroundColor(Color.GREEN);
+				CustomListViewItems.get(position).setColor(Color.GREEN);
+
+				pref.edit().putInt("Primary_pos",position).apply();
+				pref.edit().commit();
+
 				Primarypos=position;
 			}if(already_clicked)
 			{
-				convertView.setBackgroundColor(Color.WHITE);
-				Primarypos=-333;
+				//convertView.setBackgroundColor(Color.WHITE);
+				CustomListViewItems.get(position).setColor(Color.WHITE);
+				Primarypos=-909;
 			}
 		}
 		if (Secondary == position ) {
-			Log.e("In Secondary","");
+		//	Log.e("In Secondary","");
 			if(!S_already_clicked) {
-				convertView.setBackgroundColor(Color.GRAY);
+				//convertView.setBackgroundColor(Color.GRAY);
+				CustomListViewItems.get(position).setColor(Color.GRAY);
 				Secondarypos=position;
 			}if(S_already_clicked)
 			{
-				convertView.setBackgroundColor(Color.WHITE);
+				//convertView.setBackgroundColor(Color.WHITE);
+				CustomListViewItems.get(position).setColor(Color.WHITE);
 				Secondarypos=-333;
 			}
 		}
 		if (Ternary == position ) {
-			Log.e("In ternary","");
+		//	Log.e("In ternary","");
 			if(!T_already_clicked) {
-				convertView.setBackgroundColor(Color.YELLOW);
+				//convertView.setBackgroundColor(Color.YELLOW);
+				CustomListViewItems.get(position).setColor(Color.YELLOW);
 				Ternarypos=position;
 			}if(T_already_clicked)
 			{
 				convertView.setBackgroundColor(Color.WHITE);
+				CustomListViewItems.get(position).setColor(Color.WHITE);
 				Ternarypos=-333;
 			}
 		}
 		if (Quatary == position ) {
-			Log.e("In Quantry", "");
+		//	Log.e("In Quantry", "");
 			if(!Q_already_clicked) {
-				convertView.setBackgroundColor(Color.BLUE);
+				//convertView.setBackgroundColor(Color.BLUE);
+				CustomListViewItems.get(position).setColor(Color.BLUE);
 				Quatarypos=position;
 			}if(Q_already_clicked)
 			{
-				convertView.setBackgroundColor(Color.WHITE);
+				//convertView.setBackgroundColor(Color.WHITE);
+				CustomListViewItems.get(position).setColor(Color.WHITE);
 				Quatarypos=-333;
 			}
 		}
@@ -138,7 +155,7 @@ public class CustomListViewAdapter extends BaseAdapter {
 		LocalAreaIcon.setImageResource(CustomListViewItems.get(position).getIcon());
 		LargerAreaIcon.setImageResource(CustomListViewItems.get(position).getIcon1());
 		ArrowIcon.setImageResource(CustomListViewItems.get(position).getIcon2());
-                
+		convertView.setBackgroundColor(CustomListViewItems.get(position).getColor());
         return convertView;
 	}
 

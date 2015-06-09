@@ -8,6 +8,15 @@
 
     <TextView android:text="@string/title_activity_sponsor" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-         />
+        android:id="@+id/myid" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button12"
+        android:onClick="show"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

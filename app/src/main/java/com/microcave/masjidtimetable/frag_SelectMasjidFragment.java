@@ -1,8 +1,12 @@
 package com.microcave.masjidtimetable;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -16,6 +20,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.microcave.masjidtimetable.util.classes.Communicator_fragment;
@@ -26,6 +33,8 @@ import com.microcave.masjidtimetable.util.classes.GetDataFromWebservice;
 import com.microcave.masjidtimetable.util.classes.I_MasjiddetailPage;
 import com.microcave.masjidtimetable.util.classes.I_getObject;
 import com.microcave.masjidtimetable.util.classes.MasjidDetail;
+import com.microcave.masjidtimetable.util.classes.MasjidSQLContract;
+import com.microcave.masjidtimetable.util.classes.MasjidSQLLiteOpenHelper;
 import com.microcave.masjidtimetable.util.classes.Select_masjid_Communicator;
 
 import org.json.JSONArray;
@@ -43,6 +52,7 @@ public class frag_SelectMasjidFragment extends Fragment  implements Select_masji
 
     JSONObject obj;
     Context context;
+    int count=0;
     JSONArray arr;
     ListView MasjidList;
     ArrayList<String> Masjid;
@@ -57,41 +67,37 @@ public class frag_SelectMasjidFragment extends Fragment  implements Select_masji
     ArrayList<CustomListView> listViewItems;
     ArrayList<CustomListView> ShowValue;
     CustomListViewAdapter ListViewAdapter;
+    View vj;
 
     Communicator_fragment data;
 
     I_MasjiddetailPage DetailPage;
     static I_getObject get;
+    SharedPreferences pref;
 
-
+    String Masjid_Prayer_Time_URL="http://www.masjid-timetable.com/data/timetable.php?masjid_id=";
+    boolean PrayerTime=false;
 
     public frag_SelectMasjidFragment() {
 
     }
-
+    SQLiteDatabase db;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+       pref=  getActivity().getSharedPreferences("Primary",Context.MODE_PRIVATE);
 
         data=(Communicator_fragment)getActivity();
         ( (frag_SelectMasjid)getActivity() ).FC=this;
 
 
-        return inflater.inflate(R.layout.fragment_frag__select_masjid, container, false);
+        vj= inflater.inflate(R.layout.fragment_frag__select_masjid, container, false);
 
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-if(get!=null)
-{
-    Log.e("OBJECT VALUE" , "Value is found");
-    DetailPage= (MasjidDetail_fragment)get.getobject();
-}
+        if(get!=null)
+        {
+         //   Log.e("OBJECT VALUE" , "Value is found");
+            DetailPage= (MasjidDetail_fragment)get.getobject();
+        }
         //------------------- initialization ----------------------------------------------------
         MasjidDetailArray = new ArrayList<MasjidDetail>();
         Masjid=new ArrayList<String>();
@@ -102,10 +108,11 @@ if(get!=null)
         listViewItems=new ArrayList<CustomListView>();
         ShowValue=new ArrayList<CustomListView>();
 
+        db= new MasjidSQLLiteOpenHelper(getActivity()).getWritableDatabase();
 
 
-        MasjidList=(ListView) getView(). findViewById(R.id.masjid_list);
-        searchbox= (EditText)getView().findViewById(R.id.search);
+        MasjidList=(ListView) vj. findViewById(R.id.masjid_list);
+        searchbox= (EditText)vj.findViewById(R.id.search);
 //-------------------------------------------------------------------------------------------------
         MasjidList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -115,32 +122,32 @@ if(get!=null)
 
 
 
-             //   view.setBackgroundColor(getResources().getColor(R.color.material_blue_grey_800));
-                        String name=    listViewItems.get(position).getMasjidName();
+                //   view.setBackgroundColor(getResources().getColor(R.color.material_blue_grey_800));
+                String name=    listViewItems.get(position).getMasjidName();
                 String loc= listViewItems.get(position).getloc1();
-                            for(int i=0; i< getMasjidDetailArray().size() ; i++)
-                            {
-                                if(getMasjidDetailArray().get(i).getMasjid_name().contains(name)
-                                        &&
-                                      getMasjidDetailArray().get(i).getMasjid_local_area().contains(loc)  )
-                                {
-                                    DetailPage.SetDetail(name,
-                                            getMasjidDetailArray().get(i).getMasjid_local_area(),
-                                            getMasjidDetailArray().get(i).getMasjid_larger_area(),
-                                            getMasjidDetailArray().get(i).getMasjid_post_code(),
-                                            getMasjidDetailArray().get(i).getMasjid_country(),
-                                            getMasjidDetailArray().get(i).getMasjid_telephone(),
-                                            getMasjidDetailArray().get(i).getMasjid_ID()
-                                                            );
+                for(int i=0; i< getMasjidDetailArray().size() ; i++)
+                {
+                    if(getMasjidDetailArray().get(i).getMasjid_name().contains(name)
+                            &&
+                            getMasjidDetailArray().get(i).getMasjid_local_area().contains(loc)  )
+                    {
+                        DetailPage.SetDetail(name,
+                                getMasjidDetailArray().get(i).getMasjid_local_area(),
+                                getMasjidDetailArray().get(i).getMasjid_larger_area(),
+                                getMasjidDetailArray().get(i).getMasjid_post_code(),
+                                getMasjidDetailArray().get(i).getMasjid_country(),
+                                getMasjidDetailArray().get(i).getMasjid_telephone(),
+                                getMasjidDetailArray().get(i).getMasjid_ID()
+                        );
 
-                                    DetailPage.setcontext(context); // passing context to next fragment
+                        DetailPage.setcontext(context); // passing context to next fragment
 
-                                    data.getListview(ListViewAdapter,position);
-                                    //method is used for setting primary secondary etc values
-                                }
+                        data.getListview(ListViewAdapter,position);
+                        //method is used for setting primary secondary etc values
+                    }
 
 
-                            }
+                }
                 ((frag_SelectMasjid) getActivity()).Tab.setCurrentItem(1);
 
             }
@@ -151,6 +158,7 @@ if(get!=null)
             data.Loader(true);
             // -------------------------get data from web service --------------------
             new HttpAsyncTask().execute("http://www.masjid-timetable.com/data/masjids.php");
+            new HttpAsyncTask().execute(Masjid_Prayer_Time_URL+"1");
         }
         else {Toast.makeText(getActivity().getApplicationContext(),"You don`t have any network access now.",
                 Toast.LENGTH_LONG).show();}
@@ -165,7 +173,7 @@ if(get!=null)
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
 // ---------------------------------- initializer---------------------------------------------
-            //    SearchedDataResult.clear();         // deletes the previous data of searched
+                //    SearchedDataResult.clear();         // deletes the previous data of searched
                 ShowValue.clear();
                 String value = searchbox.getText().toString();
 //----------------------------------------------------------------------------------------------
@@ -242,6 +250,15 @@ if(get!=null)
         searchbox.addTextChangedListener(myhandler);
 
 
+
+        return vj;
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 
     @Override
@@ -260,6 +277,7 @@ if(get!=null)
             data.Loader(true);
             // -------------------------get data from web service --------------------
             new HttpAsyncTask().execute("http://www.masjid-timetable.com/data/masjids.php");
+
             searchbox.setText("");
         }
         else {Toast.makeText(getActivity().getApplicationContext(),"You don`t have any network access now.",Toast.LENGTH_LONG).show();}
@@ -274,58 +292,93 @@ if(get!=null)
         @Override
         protected String doInBackground(String... urls)
         {
+            if(urls[0].contentEquals(Masjid_Prayer_Time_URL+"1"))  //frag_SelectMasjid.Primary_Masjid_ID
+            {
+                Log.e("URL Matched","");
+                PrayerTime=true;
+            }
             return GetDataFromWebservice.GET(urls[0]);
         }
         // onPostExecute displays the results of the AsyncTask.
+        String Month="Current";
         @Override
         protected void onPostExecute(String result)
         {
+            ContentValues val = new ContentValues();
+    try {
+        arr = new JSONArray(result);
+        String Primary_val = pref.getString("Primary_Name", null);
+        String Sec_val = pref.getString("Sec_Name", null);
+        String Ter_val = pref.getString("Ter_Name", null);
+        String Quat_val = pref.getString("Quat_Name", null);
 
-            try {
-                arr = new JSONArray(result);
+        for (int i = 0; i < arr.length(); i++) {
+            obj = arr.getJSONObject(i);
 
-                for(int i=0;i<arr.length();i++){
-                    obj=arr.getJSONObject(i);
+            Masjid.add(i, obj.getString("masjid_name"));
+            Local_Area.add(i, obj.getString("masjid_local_area"));
+            Larger_area.add(i, obj.getString("masjid_larger_area"));
 
-                    Masjid.add(i,obj.getString("masjid_name"));
-                    Local_Area.add(i,obj.getString("masjid_local_area"));
-                    Larger_area.add(i,obj.getString("masjid_larger_area"));
+            fillMasjiddetail();
+            CustomListView cv;
+            if (Larger_area.get(i).equals("")) {
 
-                    fillMasjiddetail();
-                    if(Larger_area.get(i).equals("")){
-                        listViewItems.add(new CustomListView(Masjid.get(i),
-                                Local_Area.get(i),
+                cv = new CustomListView(Masjid.get(i),
+                        Local_Area.get(i),
+                        obj.getString("masjid_country"),
+                        R.drawable.locationicon_blue,
+                        R.drawable.locationicon_green,
+                        R.drawable.arrow_right);
+
+            } else {
+                cv = new CustomListView(Masjid.get(i),
+                        Local_Area.get(i),
+                        Larger_area.get(i)
+                                + "," +
                                 obj.getString("masjid_country"),
-                                R.drawable.locationicon_blue,
-                                R.drawable.locationicon_green,
-                                R.drawable.arrow_right));
-                    }
-                    else{
-                        listViewItems.add(new CustomListView(Masjid.get(i),
-                                Local_Area.get(i),
-                                Larger_area.get(i)
-                                        + "," +
-                                        obj.getString("masjid_country"),
-                                R.drawable.locationicon_blue,
-                                R.drawable.locationicon_green,
-                                R.drawable.arrow_right));
-                    }
+                        R.drawable.locationicon_blue,
+                        R.drawable.locationicon_green,
+                        R.drawable.arrow_right);
 
-                }
-
-                Collections.sort(Masjid);
-                Collections.sort(Local_Area);
-                Collections.sort(Larger_area);
-                Collections.sort(listViewItems);
-
-                // dismiss loader
-                data.Loader(false);
-                all();                  //set value to adapter
-
-            } catch (JSONException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
             }
+            if (Primary_val != null && Primary_val.equals(obj.getString("masjid_name"))) {
+                cv.setColor(Color.GREEN);
+                listViewItems.add(cv);
+            } else {
+                if (Sec_val != null && Sec_val.equals(obj.getString("masjid_name"))) {
+                    cv.setColor(Color.GRAY);
+                    listViewItems.add(cv);
+                } else {
+                    if (Ter_val != null && Ter_val.equals(obj.getString("masjid_name"))) {
+                        cv.setColor(Color.YELLOW);
+                        listViewItems.add(cv);
+                    } else {
+                        if (Quat_val != null && Quat_val.equals(obj.getString("masjid_name"))) {
+                            cv.setColor(Color.BLUE);
+                            listViewItems.add(cv);
+                        } else {
+                            listViewItems.add(cv);  // by default color is white
+                        }
+                    }
+                }
+            }
+
+        }
+
+        Collections.sort(Masjid);
+        Collections.sort(Local_Area);
+        Collections.sort(Larger_area);
+        Collections.sort(listViewItems);
+
+        // dismiss loader
+        data.Loader(false);
+        all();                  //set value to adapter
+
+    } catch (JSONException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+
         }
     }
 
@@ -368,7 +421,6 @@ if(get!=null)
             String alphabet = s;
             int index = SearchMasjid(alphabet);
             MasjidList.setSelectionFromTop(index, 0);
-
     }
 
     @Override
@@ -407,4 +459,6 @@ if(get!=null)
 
 
     }
+
+
 }
